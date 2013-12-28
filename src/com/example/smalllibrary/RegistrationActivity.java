@@ -25,6 +25,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class RegistrationActivity extends Activity {
 	
@@ -142,7 +143,7 @@ public class RegistrationActivity extends Activity {
 			HttpResponse httpResponse = httpClient.execute(request);
 			
 			int code = httpResponse.getStatusLine().getStatusCode();  
-	        Log.d("HttpStatus", "code: " + code);
+	        Toast.makeText(this, "Result:"+code, Toast.LENGTH_LONG).show();;
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -26,4 +26,25 @@
         android:onClick="registration"
         android:text="Registration" />
 
+    <Button
+        android:id="@+id/BtnGet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/BtnRegistration"
+        android:layout_alignRight="@+id/BtnRegistration"
+        android:layout_below="@+id/BtnRegistration"
+        android:layout_marginTop="16dp"
+        android:text="Get"
+        android:onClick="GetLibraryUser" />
+
+    <EditText
+        android:id="@+id/etLibraryUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/BtnGet"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
 </RelativeLayout>
