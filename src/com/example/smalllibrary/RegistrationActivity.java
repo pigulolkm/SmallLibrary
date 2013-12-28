@@ -9,16 +9,20 @@ import java.util.Date;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -29,13 +33,7 @@ import android.widget.Toast;
 
 public class RegistrationActivity extends Activity {
 	
-	private EditText etFirstName;
-	private EditText etLastName;
-	private EditText etPhoneNo;
-	private EditText etEmail;
-	private EditText etIDNO;
-	private EditText etBirthday;
-	private EditText etPassword;
+	private EditText etFirstName, etLastName, etPhoneNo, etEmail, etIDNO, etBirthday, etPassword, etConfirmPassword;
 	private int mYear, mMonth, mDay;
 	String today;
 	@Override
@@ -68,6 +66,7 @@ public class RegistrationActivity extends Activity {
 		etIDNO 		= (EditText)findViewById(R.id.editTextIDNO);
 		etBirthday 	= (EditText)findViewById(R.id.editTextBirthday);
 		etPassword 	= (EditText)findViewById(R.id.editTextPassword);
+		etConfirmPassword = (EditText)findViewById(R.id.editTextConfirmPassword);
 		
 	}
 	
@@ -93,7 +92,7 @@ public class RegistrationActivity extends Activity {
 						
 						// Due to monthOfYear starts from 0
 						int Month = monthOfYear + 1;
-						etBirthday.setText(mDay+"-"+Month+"-"+mYear);
+						etBirthday.setText(mYear+"-"+Month+"-"+mDay);
 					}
 				}, mYear,mMonth,mDay).show();
 			}
@@ -111,6 +110,7 @@ public class RegistrationActivity extends Activity {
 		etIDNO.setText("");
 		etBirthday.setText("");
 		etPassword.setText("");
+		etConfirmPassword.setText("");
 	}
 	
 	// ButtonRegister Method
@@ -119,35 +119,80 @@ public class RegistrationActivity extends Activity {
 		// TODO Error Checking
 		// TODO Password Encrytion
 			
-		JSONObject json = new JSONObject();
+		JSONObject jsonObj = new JSONObject();
 		
 		try {
-			json.put("L_firstName", etFirstName.getText());
-			json.put("L_lastName", etLastName.getText());
-			json.put("L_phoneNo", etPhoneNo.getText());
-			json.put("L_email", etEmail.getText());
-			json.put("L_IDNO", etIDNO.getText());
-			json.put("L_birthday", etBirthday.getText());
-			json.put("L_password", etPassword.getText());
-			json.put("L_accessRight", "100");
-			json.put("L_registerDatetime", today);
-			json.put("L_isBan", false);
+			jsonObj.put("L_firstName", etFirstName.getText());
+			jsonObj.put("L_lastName", etLastName.getText());
+			jsonObj.put("L_phoneNo", etPhoneNo.getText());
+			jsonObj.put("L_email", etEmail.getText());
+			jsonObj.put("L_IDNO", etIDNO.getText());
+			jsonObj.put("L_birthday", etBirthday.getText());
+			jsonObj.put("L_password", etPassword.getText());
 			
-			HttpPost request = new HttpPost("http://piguloming.no-ip.org:90/api/LibraryUser/PostLibraryUser");
-			request.setHeader("Content-Type", "application/json");
-			
-			HttpEntity httpEntity = new StringEntity(json.toString(), HTTP.UTF_8);
-			request.setEntity(httpEntity);
-			
-			HttpClient httpClient = new DefaultHttpClient();
-			HttpResponse httpResponse = httpClient.execute(request);
-			
-			int code = httpResponse.getStatusLine().getStatusCode();  
-	        Toast.makeText(this, "Result:"+code, Toast.LENGTH_LONG).show();;
+			new PostRegistration().execute(jsonObj);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private class PostRegistration extends AsyncTask<JSONObject, Void, String>{
+
+		private final HttpClient  client = new DefaultHttpClient();
+		private ProgressDialog Dialog = new ProgressDialog(RegistrationActivity.this);
+		
+		@Override
+		protected void onPreExecute() {			
+			Dialog.setCancelable(true);
+			Dialog.setTitle("Loading");
+			Dialog.setMessage("Please wait...");
+			Dialog.show();
+		}
+		
+		@Override
+		protected String doInBackground(JSONObject... jsonObj) {
+			String result = null;
+			try
+			{
+				HttpPost httpPost = new HttpPost("http://piguloming.no-ip.org:90/api/LibraryUser/PostLibraryUser");
+				// Convert JSONObject to JSON to String
+				String json = jsonObj[0].toString();
+				// Set json to StringEntity
+				StringEntity se= new StringEntity(json);
+				// Set httpPost Entity
+				httpPost.setEntity(se);
+				// Set some headers to inform server about the type of the content
+				httpPost.setHeader("Content-Encoding", "UTF-8");
+				httpPost.setHeader("Content-Type", "application/json");
+				HttpResponse httpResponse = client.execute(httpPost);
+				
+				if(httpResponse.getStatusLine().getStatusCode() == 201)
+				{
+					result = "Success Registration! "+httpResponse.getStatusLine().toString();
+					
+				}
+				else
+				{
+					result = httpResponse.getStatusLine().toString();
+					result += " "+ EntityUtils.toString(httpResponse.getEntity());
+				}
+				
+			}
+			catch(Exception e)
+			{
+				
+			}
+			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(String result)
+		{
+			Dialog.dismiss();
+			Toast.makeText(RegistrationActivity.this, result, Toast.LENGTH_LONG).show();
+		}
+		
 	}
 
 	@Override

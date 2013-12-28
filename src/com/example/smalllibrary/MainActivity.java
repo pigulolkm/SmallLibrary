@@ -51,8 +51,9 @@ public class MainActivity extends Activity {
 	private void findViews(){
 		etLibraryUser = (EditText)findViewById(R.id.etLibraryUser);
 	}
-	
-	// "Scan Code" button click
+	 ////////////////////////////
+	/* Scan Code button click */
+    ///////////////////////////
 	public void scanCode(View v) {
 		if(isCameraAvailable())
 		{
@@ -61,52 +62,25 @@ public class MainActivity extends Activity {
 			startActivityForResult(intent, scan_REQUEST);
 		}
 	}
-	
-	// "Registration" button click
+	 ///////////////////////////////
+	/* Registration button click */
+    //////////////////////////////
 	public void registration(View v){
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, RegistrationActivity.class);
 		startActivity(intent);
 	}
-	
-	// "GetLibraryUser" button click\
+	 //////////////////////////////////
+	/* GetLibraryUsers button click */
+	/////////////////////////////////
 	public void GetLibraryUser(View v)
 	{
 		String url = "http://piguloming.no-ip.org:90/api/LibraryUser/GetLibraryUsers";
 		new GetLibraryUsersOperation().execute(url);
-	    //httpget.addHeader("Content-Type", "application/json; charset=utf-8");
-//	    try {
-//	        // Execute HTTP Post Request
-//	    	DefaultHttpClient httpclient = new DefaultHttpClient();
-//	    	Toast.makeText(this, "Requesting...", Toast.LENGTH_SHORT).show();
-//	        HttpResponse response = httpclient.execute(new HttpGet("http://piguloming.no-ip.org:90/api/LibraryUser/GetLibraryUsers"));
-//	        
-//	        int statusCode = response.getStatusLine().getStatusCode();
-//	        Toast.makeText(this, "Status Code: "+ statusCode, Toast.LENGTH_LONG).show();
-//	        
-//	        HttpEntity ht = response.getEntity();
-//
-//	            BufferedHttpEntity buf = new BufferedHttpEntity(ht);
-//
-//	            InputStream is = buf.getContent();
-//
-//	            BufferedReader r = new BufferedReader(new InputStreamReader(is));
-//
-//	            StringBuilder total = new StringBuilder();
-//	            String line;
-//	            while ((line = r.readLine()) != null) {
-//	                total.append(line);
-//	            }
-//	            Toast.makeText(this, total, Toast.LENGTH_LONG).show();
-//
-//	    } catch (ClientProtocolException e) {
-//	        // TODO Auto-generated catch block
-//	    } catch (IOException e) {
-//	        // TODO Auto-generated catch block
-//	        e.printStackTrace();
-//	    }
 	}
-	
+	 ///////////////////////////////
+	/* GetLibraryUsers AsyncTask */
+	//////////////////////////////
 	private class GetLibraryUsersOperation extends AsyncTask<String, Void, String>{
 		
 		private final HttpClient  client = new DefaultHttpClient();
@@ -114,6 +88,8 @@ public class MainActivity extends Activity {
 		
 		@Override
 		protected void onPreExecute() {
+			Dialog.setCancelable(true);
+			Dialog.setTitle("Loading");
 			Dialog.setMessage("Please wait...");
 			Dialog.show();
 		}
@@ -132,7 +108,7 @@ public class MainActivity extends Activity {
 				}
 				else
 				{
-					result = String.valueOf(httpResponse.getStatusLine().getStatusCode());
+					result = httpResponse.getStatusLine().toString();
 				}
 				
 			}
