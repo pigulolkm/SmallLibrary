@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
 	 ////////////////////////////
 	/* Scan Code button click */
     ///////////////////////////
-	public void scanCode(View v) {
+	public void ScanCode(View v) {
 		if(isCameraAvailable())
 		{
 			Intent intent = new Intent();
@@ -65,11 +65,21 @@ public class MainActivity extends Activity {
 	 ///////////////////////////////
 	/* Registration button click */
     //////////////////////////////
-	public void registration(View v){
+	public void Registration(View v){
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, RegistrationActivity.class);
 		startActivity(intent);
 	}
+	
+	 //////////////////////////////
+	/* SearchBooks button click */
+	/////////////////////////////
+	public void SearchBooks(View v){
+		Intent intent = new Intent();
+		intent.setClass(MainActivity.this, SearchBooksActivity.class);
+		startActivity(intent);
+	}
+	
 	 //////////////////////////////////
 	/* GetLibraryUsers button click */
 	/////////////////////////////////
