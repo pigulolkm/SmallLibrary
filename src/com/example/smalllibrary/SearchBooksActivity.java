@@ -1,11 +1,16 @@
 package com.example.smalllibrary;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +25,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,6 +34,7 @@ public class SearchBooksActivity extends Activity {
 
 	private EditText editTextSearchKey;
 	private Spinner spinnerSeachOption;
+	private ListView listViewSearchResult;
 	
 	private String[] key;
     private ArrayAdapter<String> searchOptionAdapter;
@@ -36,11 +44,7 @@ public class SearchBooksActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_books);
-		 ///////////////////////////////////
-		// No title bar in this activity //
-		//////////////////////////////////
-	    this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
-	    
+		 	    
 	    init();
         findViews();
         setListener();
@@ -57,6 +61,7 @@ public class SearchBooksActivity extends Activity {
 	private void findViews(){
 		editTextSearchKey = (EditText)findViewById(R.id.editTextSearchKey);
 		spinnerSeachOption = (Spinner)findViewById(R.id.spinnerSeachOption);
+		listViewSearchResult = (ListView)findViewById(R.id.listViewSearchResult);
 	}
 	
 	private void setListener() {
@@ -101,19 +106,26 @@ public class SearchBooksActivity extends Activity {
 	//////////////////////////////////////////////////////
 	// SearchBooks button click, success: make request //
 	////////////////////////////////////////////////////
-	public void SearchBooks(View v) {
+	public void searchBooks(View v) {
 		if(editTextSearchKey.getText().toString().trim().equals(""))
 		{
-			Toast.makeText(SearchBooksActivity.this, "Please enter search terms", Toast.LENGTH_LONG);
+			Toast.makeText(SearchBooksActivity.this, "Please enter search terms", Toast.LENGTH_LONG).show();
 		}
 		else
 		{
 			String searchKey = editTextSearchKey.getText().toString();
 			String searchOption = spinnerSeachOption.getSelectedItem().toString();
-			String url = Generic.serverurl + "Book/GetBookByKey"+"?searchKey"+searchKey+"&searchOption"+searchOption;
+			String url = Generic.serverurl + "Book/GetBookByKey"+"?searchKey="+searchKey+"&searchOption="+searchOption;
 			
 			new GetSearchBooksOperation().execute(url);
 		}
+	}
+	
+	/////////////////////////
+	// Reset button click //
+	///////////////////////
+	public void reset(View v) {
+		editTextSearchKey.setText("");
 	}
 	
 	private class GetSearchBooksOperation extends AsyncTask<String, Void, String>{
@@ -158,11 +170,44 @@ public class SearchBooksActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result)
 		{
+			showBookSearchedResult(result);
 			Dialog.dismiss();
-			Toast.makeText(SearchBooksActivity.this, result, Toast.LENGTH_LONG).show();
-			// TO-DO make listView
 		}
+	}
 	
+	public void showBookSearchedResult(String result)
+	{
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		HashMap<String,Object> item;
+		
+		try {
+			
+			JSONArray jsonArray = new JSONArray(result);
+			JSONObject jsonObj;
+			
+			for(int i = 0; i < jsonArray.length(); i++)
+			{
+				jsonObj = jsonArray.getJSONObject(i);
+				item = new HashMap<String,Object>();
+				
+				item.put("title", jsonObj.getString("B_title"));
+				item.put("author", jsonObj.getString("B_author"));
+				item.put("publisher",jsonObj.getString("B_publisher"));
+				item.put("publicationDate", jsonObj.getString("B_datetime"));
+				list.add(item);
+			
+				Toast.makeText(SearchBooksActivity.this, jsonObj.getString("B_title")+" "+i, Toast.LENGTH_LONG).show();
+			}
+			
+			SimpleAdapter adapter = new SimpleAdapter(SearchBooksActivity.this, list, R.layout.listview_searchresult, 
+					new String[]{"title","author","publisher","publicationDate"},
+					new int[]{R.id.textViewBookTitle, R.id.textViewBookAuthor, R.id.textViewBookPublisher, R.id.textViewBookPublicationDate});
+			
+			listViewSearchResult.setAdapter(adapter);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	public boolean isCameraAvailable() {

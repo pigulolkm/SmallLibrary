@@ -34,13 +34,36 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_alignLeft="@+id/linearLayout2"
+        android:text="Reset"
+        android:onClick="reset" />
+    
+    <Button
         android:id="@+id/btnSeachBooks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/linearLayout1"
         android:layout_below="@+id/linearLayout1"
         android:layout_marginTop="23dp"
-        android:text="Search"
-        android:onClick="searchBooks" />
+        android:onClick="searchBooks"
+        android:text="Search" />
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:layout_below="@+id/btnSeachBooks"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/listViewSearchResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </RelativeLayout>

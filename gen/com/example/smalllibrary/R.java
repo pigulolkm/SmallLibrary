@@ -30,9 +30,10 @@ public final class R {
         public static final int BtnSearchBooks=0x7f080002;
         public static final int ButtonRegister=0x7f080015;
         public static final int ButtonReset=0x7f080016;
-        public static final int action_settings=0x7f08001c;
-        public static final int btnSeachBooks=0x7f08001a;
-        public static final int cameraPreview=0x7f08001b;
+        public static final int action_settings=0x7f080023;
+        public static final int btnReset=0x7f08001a;
+        public static final int btnSeachBooks=0x7f08001c;
+        public static final int cameraPreview=0x7f080022;
         public static final int editTextBirthday=0x7f080010;
         public static final int editTextConfirmPassword=0x7f080014;
         public static final int editTextEmail=0x7f08000c;
@@ -44,8 +45,14 @@ public final class R {
         public static final int editTextSearchKey=0x7f080018;
         public static final int etLibraryUser=0x7f080003;
         public static final int linearLayout1=0x7f080017;
+        public static final int linearLayout2=0x7f08001b;
+        public static final int listViewSearchResult=0x7f08001d;
         public static final int spinnerSeachOption=0x7f080019;
         public static final int textViewBirthday=0x7f08000f;
+        public static final int textViewBookAuthor=0x7f08001f;
+        public static final int textViewBookPublicationDate=0x7f080021;
+        public static final int textViewBookPublisher=0x7f080020;
+        public static final int textViewBookTitle=0x7f08001e;
         public static final int textViewConfirmPassword=0x7f080013;
         public static final int textViewEmail=0x7f08000b;
         public static final int textViewFirstName=0x7f080007;
@@ -58,7 +65,8 @@ public final class R {
         public static final int activity_main=0x7f030000;
         public static final int activity_registration=0x7f030001;
         public static final int activity_search_books=0x7f030002;
-        public static final int main=0x7f030003;
+        public static final int listview_searchresult=0x7f030003;
+        public static final int main=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f070000;
