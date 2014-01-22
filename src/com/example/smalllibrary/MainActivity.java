@@ -18,6 +18,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import com.example.smalllibrary.CameraTestActivity;
+import com.example.smalllibrary.utils.Generic;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,7 +34,6 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-	private static final int scan_REQUEST = 1;
 	EditText etLibraryUser;
 	
     @Override
@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
 		{
 			Intent intent = new Intent();
 			intent.setClass(MainActivity.this, CameraTestActivity.class);
-			startActivityForResult(intent, scan_REQUEST);
+			startActivityForResult(intent, Generic.scan_REQUEST);
 		}
 	}
 	 ///////////////////////////////
@@ -88,6 +88,15 @@ public class MainActivity extends Activity {
 	{
 		String url = "http://piguloming.no-ip.org:90/api/LibraryUser/GetLibraryUsers";
 		new GetLibraryUsersOperation().execute(url);
+	}
+	
+	 ////////////////////////////////
+	 // Borrow Books button click //
+	 //////////////////////////////
+	public void BorrowBooks(View v) {
+		Intent intent = new Intent();
+		intent.setClass(MainActivity.this, BorrowBooksActivity.class);
+		startActivity(intent);
 	}
 	 ///////////////////////////////
 	/* GetLibraryUsers AsyncTask */
@@ -142,7 +151,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(requestCode) {
-			case scan_REQUEST:
+			case Generic.scan_REQUEST:
 				if(resultCode == RESULT_OK)
 				{
 					Toast.makeText(this, "Scan Result = " + data.getStringExtra("SCAN_RESULT"), Toast.LENGTH_LONG).show();

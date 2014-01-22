@@ -12,6 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.smalllibrary.utils.Generic;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -34,7 +36,6 @@ public class SearchBooksActivity extends Activity {
 
 	private EditText editTextSearchKey;
 	private Spinner spinnerSeachOption;
-	private ListView listViewSearchResult;
 	
 	private String[] key;
     private ArrayAdapter<String> searchOptionAdapter;
@@ -61,7 +62,6 @@ public class SearchBooksActivity extends Activity {
 	private void findViews(){
 		editTextSearchKey = (EditText)findViewById(R.id.editTextSearchKey);
 		spinnerSeachOption = (Spinner)findViewById(R.id.spinnerSeachOption);
-		listViewSearchResult = (ListView)findViewById(R.id.listViewSearchResult);
 	}
 	
 	private void setListener() {
@@ -170,44 +170,11 @@ public class SearchBooksActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result)
 		{
-			showBookSearchedResult(result);
 			Dialog.dismiss();
+			Intent intent = new Intent(SearchBooksActivity.this, ShowSearchBooksResultActivity.class);
+			intent.putExtra("SearchBooksResult", result);
+			startActivity(intent);
 		}
-	}
-	
-	public void showBookSearchedResult(String result)
-	{
-		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		HashMap<String,Object> item;
-		
-		try {
-			
-			JSONArray jsonArray = new JSONArray(result);
-			JSONObject jsonObj;
-			
-			for(int i = 0; i < jsonArray.length(); i++)
-			{
-				jsonObj = jsonArray.getJSONObject(i);
-				item = new HashMap<String,Object>();
-				
-				item.put("title", jsonObj.getString("B_title"));
-				item.put("author", jsonObj.getString("B_author"));
-				item.put("publisher",jsonObj.getString("B_publisher"));
-				item.put("publicationDate", jsonObj.getString("B_datetime"));
-				list.add(item);
-			
-				Toast.makeText(SearchBooksActivity.this, jsonObj.getString("B_title")+" "+i, Toast.LENGTH_LONG).show();
-			}
-			
-			SimpleAdapter adapter = new SimpleAdapter(SearchBooksActivity.this, list, R.layout.listview_searchresult, 
-					new String[]{"title","author","publisher","publicationDate"},
-					new int[]{R.id.textViewBookTitle, R.id.textViewBookAuthor, R.id.textViewBookPublisher, R.id.textViewBookPublicationDate});
-			
-			listViewSearchResult.setAdapter(adapter);
-			
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}	
 	}
 	
 	public boolean isCameraAvailable() {

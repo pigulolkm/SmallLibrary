@@ -38,6 +38,14 @@
             android:name="com.example.smalllibrary.SearchBooksActivity"
             android:label="@string/title_activity_search_books" >
         </activity>
+        <activity
+            android:name="com.example.smalllibrary.ShowSearchBooksResultActivity"
+            android:label="@string/title_activity_show_search_books_result" >
+        </activity>
+        <activity
+            android:name="com.example.smalllibrary.BorrowBooksActivity"
+            android:label="@string/title_activity_borrow_book" >
+        </activity>
     </application>
 
 </manifest>

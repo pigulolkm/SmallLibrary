@@ -6,5 +6,7 @@
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_search_books">SearchBooksActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_show_search_books_result">Show_search_books_result</string>
+    <string name="title_activity_borrow_book">BorrowBookActivity</string>
 
 </resources>
