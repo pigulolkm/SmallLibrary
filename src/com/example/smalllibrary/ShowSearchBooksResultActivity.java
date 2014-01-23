@@ -56,11 +56,11 @@ public class ShowSearchBooksResultActivity extends Activity {
 				item.put("title", jsonObj.getString("B_title"));
 				item.put("author", jsonObj.getString("B_author"));
 				item.put("publisher",jsonObj.getString("B_publisher"));
-				item.put("publicationDate", jsonObj.getString("B_datetime"));
+				item.put("publicationDate", jsonObj.getString("B_publicationDate"));
 				list.add(item);
 			}
 			
-			SimpleAdapter adapter = new SimpleAdapter(ShowSearchBooksResultActivity.this, list, R.layout.listview_searchresult, 
+			SimpleAdapter adapter = new SimpleAdapter(ShowSearchBooksResultActivity.this, list, R.layout.listview_book_item, 
 					new String[]{"title","author","publisher","publicationDate"},
 					new int[]{R.id.textViewBookTitle, R.id.textViewBookAuthor, R.id.textViewBookPublisher, R.id.textViewBookPublicationDate});
 			
