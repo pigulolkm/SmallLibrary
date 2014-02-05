@@ -31,12 +31,12 @@ public final class R {
         public static final int BtnSearchBooks=0x7f080007;
         public static final int ButtonRegister=0x7f080019;
         public static final int ButtonReset=0x7f08001a;
-        public static final int action_settings=0x7f080027;
+        public static final int action_settings=0x7f080028;
         public static final int btnConfirmBorrowBooks=0x7f080001;
         public static final int btnReset=0x7f08001e;
         public static final int btnScanBook=0x7f080002;
         public static final int btnSeachBooks=0x7f080020;
-        public static final int cameraPreview=0x7f080026;
+        public static final int cameraPreview=0x7f080027;
         public static final int editTextBirthday=0x7f080014;
         public static final int editTextConfirmPassword=0x7f080018;
         public static final int editTextEmail=0x7f080010;
@@ -56,6 +56,7 @@ public final class R {
         public static final int textViewBookAuthor=0x7f080023;
         public static final int textViewBookPublicationDate=0x7f080025;
         public static final int textViewBookPublisher=0x7f080024;
+        public static final int textViewBookStatus=0x7f080026;
         public static final int textViewBookTitle=0x7f080022;
         public static final int textViewConfirmPassword=0x7f080017;
         public static final int textViewEmail=0x7f08000f;

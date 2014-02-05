@@ -18,6 +18,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.smalllibrary.utils.Generic;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -120,7 +122,7 @@ public class RegistrationActivity extends Activity {
 		// TODO Password Encrytion
 			
 		JSONObject jsonObj = new JSONObject();
-		
+		;
 		try {
 			jsonObj.put("L_firstName", etFirstName.getText());
 			jsonObj.put("L_lastName", etLastName.getText());
@@ -128,7 +130,7 @@ public class RegistrationActivity extends Activity {
 			jsonObj.put("L_email", etEmail.getText());
 			jsonObj.put("L_IDNO", etIDNO.getText());
 			jsonObj.put("L_birthday", etBirthday.getText());
-			jsonObj.put("L_password", etPassword.getText());
+			jsonObj.put("L_password", Generic.computeHash(etPassword.getText().toString()));
 			
 			new PostRegistration().execute(jsonObj);
 			
@@ -169,7 +171,7 @@ public class RegistrationActivity extends Activity {
 				
 				if(httpResponse.getStatusLine().getStatusCode() == 201)
 				{
-					result = "Success Registration! "+httpResponse.getStatusLine().toString();
+					result = "Success Registration! ";
 					
 				}
 				else

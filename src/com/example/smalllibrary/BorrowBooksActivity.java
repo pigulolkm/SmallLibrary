@@ -65,11 +65,8 @@ public class BorrowBooksActivity extends Activity {
 		HashMap<String,Object> item;
 		JSONArray jsonArray = new JSONArray();
 		JSONObject jsonObj;
-		// TODO Add PostBooks method on server
-		String url = Generic.serverurl+"Book/PostBooks";
-		//TODO 1. check borrow book limit 
 		
-		// 1.1 if OK, http post to add borrowing record  => PostBorrowingRecord()
+		String url = Generic.serverurl+"BorrowingRecord/PostBorrowingRecord";
 		
 		for(int i = 0; i < list.size(); i++)
 		{
@@ -79,6 +76,7 @@ public class BorrowBooksActivity extends Activity {
 			try {
 				item = list.get(i);
 				jsonObj.put("B_id", item.get("id"));
+				jsonObj.put("L_id", Generic.LID);
 				jsonArray.put(jsonObj);
 			}
 			catch(JSONException e)
@@ -88,7 +86,7 @@ public class BorrowBooksActivity extends Activity {
 		}
 		Toast.makeText(BorrowBooksActivity.this, jsonArray.toString(), Toast.LENGTH_LONG).show();
 		
-		//String[] params = new String[]{url, jsonArray};
+		String[] params = new String[]{url, jsonArray.toString()};
 		//new PostBorrowingRecord().execute(params);
 	}
 	
@@ -250,9 +248,9 @@ public class BorrowBooksActivity extends Activity {
 			String result = null;
 			try
 			{
-				HttpPost httpPost = new HttpPost("http://piguloming.no-ip.org:90/api/LibraryUser/PostLibraryUser");
+				HttpPost httpPost = new HttpPost(params[0]);
 				// Convert JSONObject to JSON to String
-				String json = params[0].toString();
+				String json = params[1].toString();
 				// Set json to StringEntity
 				StringEntity se= new StringEntity(json);
 				// Set httpPost Entity
