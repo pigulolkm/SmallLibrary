@@ -44,27 +44,34 @@ public class ShowSearchBooksResultActivity extends Activity {
 		HashMap<String,Object> item;
 		
 		try {
-			
 			JSONArray jsonArray = new JSONArray(result);
-			JSONObject jsonObj;
-			
-			for(int i = 0; i < jsonArray.length(); i++)
-			{
-				jsonObj = jsonArray.getJSONObject(i);
-				item = new HashMap<String,Object>();
+
+			if(jsonArray.length() != 0)
+			{			
+				JSONObject jsonObj;
 				
-				item.put("title", jsonObj.getString("B_title"));
-				item.put("author", jsonObj.getString("B_author"));
-				item.put("publisher",jsonObj.getString("B_publisher"));
-				item.put("publicationDate", jsonObj.getString("B_publicationDate"));
-				list.add(item);
+				for(int i = 0; i < jsonArray.length(); i++)
+				{
+					jsonObj = jsonArray.getJSONObject(i);
+					item = new HashMap<String,Object>();
+					
+					item.put("title", jsonObj.getString("B_title"));
+					item.put("author", jsonObj.getString("B_author"));
+					item.put("publisher",jsonObj.getString("B_publisher"));
+					item.put("publicationDate", jsonObj.getString("B_publicationDate"));
+					list.add(item);
+				}
+				
+				SimpleAdapter adapter = new SimpleAdapter(ShowSearchBooksResultActivity.this, list, R.layout.listview_book_item, 
+						new String[]{"title","author","publisher","publicationDate"},
+						new int[]{R.id.textViewBookTitle, R.id.textViewBookAuthor, R.id.textViewBookPublisher, R.id.textViewBookPublicationDate});
+				
+				listViewSearchResult.setAdapter(adapter);
 			}
-			
-			SimpleAdapter adapter = new SimpleAdapter(ShowSearchBooksResultActivity.this, list, R.layout.listview_book_item, 
-					new String[]{"title","author","publisher","publicationDate"},
-					new int[]{R.id.textViewBookTitle, R.id.textViewBookAuthor, R.id.textViewBookPublisher, R.id.textViewBookPublicationDate});
-			
-			listViewSearchResult.setAdapter(adapter);
+			else
+			{
+				Toast.makeText(ShowSearchBooksResultActivity.this, "0 results.", Toast.LENGTH_LONG).show();
+			}
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

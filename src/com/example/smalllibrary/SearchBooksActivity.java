@@ -1,16 +1,11 @@
 package com.example.smalllibrary;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import com.example.smalllibrary.utils.Generic;
 
@@ -22,13 +17,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.view.Menu;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -115,6 +107,11 @@ public class SearchBooksActivity extends Activity {
 		{
 			String searchKey = editTextSearchKey.getText().toString();
 			String searchOption = spinnerSeachOption.getSelectedItem().toString();
+			// Remove the space of Scan Code
+			if(searchOption.equals("Scan Code"))
+			{
+				searchOption = "ScanCode";
+			}
 			String url = Generic.serverurl + "Book/GetBookByKey"+"?searchKey="+searchKey+"&searchOption="+searchOption;
 			
 			new GetSearchBooksOperation().execute(url);
