@@ -18,7 +18,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import com.example.smalllibrary.CameraTestActivity;
-import com.example.smalllibrary.utils.Generic;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,7 +33,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-	EditText etLibraryUser;
+
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,7 @@ public class MainActivity extends Activity {
 	}
 	
 	private void findViews(){
-		etLibraryUser = (EditText)findViewById(R.id.etLibraryUser);
+
 	}
 	 ////////////////////////////
 	/* Scan Code button click */
@@ -81,71 +80,13 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
-	 //////////////////////////////////
-	/* GetLibraryUsers button click */
-	/////////////////////////////////
-	public void GetLibraryUser(View v)
-	{
-		String url = "http://piguloming.no-ip.org:90/api/LibraryUser/GetLibraryUsers";
-		new GetLibraryUsersOperation().execute(url);
-	}
-	
 	 ////////////////////////////////
 	 // Borrow Books button click //
 	 //////////////////////////////
 	public void BorrowBooks(View v) {
 		Intent intent = new Intent();
-		intent.setClass(MainActivity.this, BorrowBooksActivity.class);
+		intent.setClass(MainActivity.this, BorrowBooksLoginActivity.class);
 		startActivity(intent);
-	}
-	 ///////////////////////////////
-	/* GetLibraryUsers AsyncTask */
-	//////////////////////////////
-	private class GetLibraryUsersOperation extends AsyncTask<String, Void, String>{
-		
-		private final HttpClient  client = new DefaultHttpClient();
-		private ProgressDialog Dialog = new ProgressDialog(MainActivity.this);
-		
-		@Override
-		protected void onPreExecute() {
-			Dialog.setCancelable(true);
-			Dialog.setTitle("Loading");
-			Dialog.setMessage("Please wait...");
-			Dialog.show();
-		}
-		
-		@Override
-		protected String doInBackground(String... urls) {
-			String result = null;
-			try
-			{
-				HttpGet httpGet = new HttpGet(urls[0]);
-				HttpResponse httpResponse = client.execute(httpGet);
-				if(httpResponse.getStatusLine().getStatusCode() == 200)
-				{
-					result = EntityUtils.toString(httpResponse.getEntity());
-					
-				}
-				else
-				{
-					result = httpResponse.getStatusLine().toString();
-				}
-				
-			}
-			catch(Exception e)
-			{
-				
-			}
-			return result;
-		}
-		
-		@Override
-		protected void onPostExecute(String result)
-		{
-			Dialog.dismiss();
-			etLibraryUser.setText(result);
-		}
-		
 	}
 	
 	@Override

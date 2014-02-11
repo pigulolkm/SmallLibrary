@@ -18,57 +18,32 @@
         android:text="Scan Code" />
 
     <Button
-        android:id="@+id/BtnRegistration"
-        android:layout_width="140dip"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:onClick="Registration"
-        android:text="Registration" />
-
-    <Button
-        android:id="@+id/BtnGet"
-        android:layout_width="140dip"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/BtnRegistration"
-        android:layout_alignRight="@+id/BtnRegistration"
-        android:layout_below="@+id/BtnRegistration"
-        android:layout_marginTop="16dp"
-        android:text="Get"
-        android:onClick="GetLibraryUser" />
-
-    <EditText
-        android:id="@+id/etLibraryUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="27dp"
-        android:ems="10"
-        android:inputType="textMultiLine" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
         android:id="@+id/BtnSearchBooks"
         android:layout_width="140dip"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/BtnGet"
-        android:layout_alignBottom="@+id/BtnGet"
-        android:layout_alignLeft="@+id/BtnScan"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:onClick="SearchBooks"
         android:text="Search Books" />
 
     <Button
+        android:id="@+id/BtnRegistration"
+        android:layout_width="140dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/BtnScan"
+        android:layout_marginTop="15dp"
+        android:onClick="Registration"
+        android:text="Registry Borrower" />
+    
+    <Button
         android:id="@+id/BtnBorrowBooks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/BtnSearchBooks"
-        android:layout_alignRight="@+id/BtnSearchBooks"
         android:layout_below="@+id/BtnSearchBooks"
-        android:layout_marginTop="16dp"
-        android:text="Borrow Books"
-        android:onClick="BorrowBooks" />
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:onClick="BorrowBooks"
+        android:text="Borrow Books" />
 
 </RelativeLayout>

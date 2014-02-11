@@ -27,8 +27,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.example.smalllibrary.utils.Generic;
-
 public class BorrowBooksActivity extends Activity {
 
 	private ListView listViewBorrowBooks;

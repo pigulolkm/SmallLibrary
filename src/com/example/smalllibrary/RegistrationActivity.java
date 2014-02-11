@@ -18,8 +18,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.smalllibrary.utils.Generic;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;

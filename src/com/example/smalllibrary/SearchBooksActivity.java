@@ -7,7 +7,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 
-import com.example.smalllibrary.utils.Generic;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
