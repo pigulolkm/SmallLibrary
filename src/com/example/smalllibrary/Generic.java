@@ -1,4 +1,4 @@
-package com.example.smalllibrary.utils;
+package com.example.smalllibrary;
 
 import java.security.MessageDigest;
 
@@ -6,6 +6,7 @@ public class Generic {
 	public static final int scan_REQUEST = 1;
 	public static String serverurl = "http://piguloming.no-ip.org:90/api/";
 	public static String LID = "1";
+	public static int borrowingLimit = 0;
 	
 	public static String computeHash(String input) {
 		StringBuffer sb = new StringBuffer();
