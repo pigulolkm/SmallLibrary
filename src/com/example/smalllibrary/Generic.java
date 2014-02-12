@@ -7,7 +7,7 @@ public class Generic {
 	public static String serverurl = "http://piguloming.no-ip.org:90/api/";
 	public static String LID = "1";
 	public static int borrowingLimit = 0;
-	
+	//Test
 	public static String computeHash(String input) {
 		StringBuffer sb = new StringBuffer();
 		try

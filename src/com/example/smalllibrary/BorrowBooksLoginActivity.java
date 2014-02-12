@@ -19,6 +19,7 @@ import android.widget.Toast;
 public class BorrowBooksLoginActivity extends Activity {
 
 	private static String BorrowerToken = "0";
+	private static String BorrowerEmail = "";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +53,18 @@ public class BorrowBooksLoginActivity extends Activity {
 			case Generic.scan_REQUEST:
 				if(resultCode == RESULT_OK)
 				{
-					BorrowerToken =  data.getStringExtra("SCAN_RESULT");
-					String url = Generic.serverurl + "/LibraryUser/GetValidateToken?token="+BorrowerToken;
-					new validateToken().execute(url);
+					try
+					{
+						String[] results = data.getStringExtra("SCAN_RESULT").split("&");
+						BorrowerToken = results[0];
+						BorrowerEmail = results[1];
+						String url = Generic.serverurl + "/LibraryUser/GetValidateToken?token="+BorrowerToken+"&email="+BorrowerEmail;
+						new validateToken().execute(url);
+					}
+					catch(Exception e)
+					{
+						Toast.makeText(BorrowBooksLoginActivity.this, "Invalid code", Toast.LENGTH_LONG).show();
+					}
                 } 
 				else if(resultCode == RESULT_CANCELED) 
 				{
