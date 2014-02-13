@@ -7,8 +7,7 @@
     <string name="title_activity_search_books">Search Books</string>
     <string name="title_activity_show_search_books_result">Show Search Books Result</string>
     <string name="title_activity_borrow_book">Borrow Book</string>
-    <string name="title_activity_borrow_books_login">BorrowBooksLoginActivity</string>
+    <string name="title_activity_borrow_books_login">Borrow Book</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_login_borrow_books">LoginBorrowBooksActivity</string>
 
 </resources>

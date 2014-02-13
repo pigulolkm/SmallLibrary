@@ -5,8 +5,9 @@ import java.security.MessageDigest;
 public class Generic {
 	public static final int scan_REQUEST = 1;
 	public static String serverurl = "http://piguloming.no-ip.org:90/api/";
-	public static String LID = "1";
+	public static String LID = "";
 	public static int borrowingLimit = 0;
+	public static String unlockPassword = "123456"; // TODO add <Rule_unclockPassword> in Rule Table & get it when admin login success
 	//Test
 	public static String computeHash(String input) {
 		StringBuffer sb = new StringBuffer();

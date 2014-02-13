@@ -117,7 +117,6 @@ public class RegistrationActivity extends Activity {
 	public void registration(View v)
 	{
 		// TODO Error Checking
-		// TODO Password Encrytion
 			
 		JSONObject jsonObj = new JSONObject();
 		;

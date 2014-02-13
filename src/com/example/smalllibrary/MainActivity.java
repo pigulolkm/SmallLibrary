@@ -40,6 +40,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        // TODO Admin login
+        // TODO Check network
         init();
         findViews();
 	}

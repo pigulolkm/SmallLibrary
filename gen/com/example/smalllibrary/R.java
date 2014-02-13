@@ -89,7 +89,6 @@ public final class R {
         public static final int hello_world=0x7f050007;
         public static final int title_activity_borrow_book=0x7f050005;
         public static final int title_activity_borrow_books_login=0x7f050006;
-        public static final int title_activity_login_borrow_books=0x7f050008;
         public static final int title_activity_registration=0x7f050002;
         public static final int title_activity_search_books=0x7f050003;
         public static final int title_activity_show_search_books_result=0x7f050004;

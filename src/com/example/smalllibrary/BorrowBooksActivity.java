@@ -17,7 +17,9 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.view.Menu;
@@ -30,6 +32,7 @@ import android.widget.Toast;
 public class BorrowBooksActivity extends Activity {
 
 	private ListView listViewBorrowBooks;
+	private static int BorrowedAmount = 0;
 	
 	private String scanCode = "";
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
@@ -38,12 +41,12 @@ public class BorrowBooksActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_borrow_book);
 		
-		//init();
+		Intent intent = new Intent();
+		BorrowedAmount = intent.getIntExtra("borrowedAmount", 0);
+		
 		findViews();
-		Scan();
+		// TODO show borrow books; borrowed amount / borrowing Limit in activity_borrow_book
 	}
-	
-	//private void init() {	}
 	
 	private void findViews(){
 		listViewBorrowBooks = (ListView)findViewById(R.id.listViewBorrowBooks);
@@ -52,7 +55,7 @@ public class BorrowBooksActivity extends Activity {
 	/////////////////////////////////
 	// ScanMoreBooks button click //
 	///////////////////////////////
-	public void ScanMoreBooks(View v) {
+	public void ScanBooks(View v) {
 		Scan();
 	}
 	
@@ -85,15 +88,23 @@ public class BorrowBooksActivity extends Activity {
 		Toast.makeText(BorrowBooksActivity.this, jsonArray.toString(), Toast.LENGTH_LONG).show();
 		
 		String[] params = new String[]{url, jsonArray.toString()};
-		//new PostBorrowingRecord().execute(params);
+		new PostBorrowingRecord().execute(params);
 	}
 	
 	private void Scan() {
-		if(isCameraAvailable())
+		// Check the amount of borrowing book is out of limit
+		if(BorrowedAmount < Generic.borrowingLimit)
 		{
-			Intent intent = new Intent();
-			intent.setClass(BorrowBooksActivity.this, CameraTestActivity.class);
-			startActivityForResult(intent, Generic.scan_REQUEST);
+			if(isCameraAvailable())
+			{
+				Intent intent = new Intent();
+				intent.setClass(BorrowBooksActivity.this, CameraTestActivity.class);
+				startActivityForResult(intent, Generic.scan_REQUEST);
+			}
+		}
+		else
+		{
+			Toast.makeText(BorrowBooksActivity.this, "You have reached the borrowing limit!", Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -191,11 +202,12 @@ public class BorrowBooksActivity extends Activity {
 								new int[]{R.id.textViewBookTitle, R.id.textViewBookAuthor, R.id.textViewBookPublisher, R.id.textViewBookPublicationDate});
 						
 						listViewBorrowBooks.setAdapter(adapter);
+						BorrowedAmount += 1;
 					}
 				}
 				else
 				{
-					Toast.makeText(BorrowBooksActivity.this, jsonObj.getString("B_title")+" cannot be borrowed. Please ask librarian for more information.", Toast.LENGTH_LONG).show();
+					Toast.makeText(BorrowBooksActivity.this, jsonObj.getString("B_title")+" cannot be borrowed. The book's status is 'Not allowed'.", Toast.LENGTH_LONG).show();
 				}
 			}
 			else
@@ -229,7 +241,6 @@ public class BorrowBooksActivity extends Activity {
 	}
 	
 	private class PostBorrowingRecord extends AsyncTask<String, Void, String>{
-		
 		private final HttpClient  client = new DefaultHttpClient();
 		private ProgressDialog Dialog = new ProgressDialog(BorrowBooksActivity.this);
 		
@@ -260,13 +271,11 @@ public class BorrowBooksActivity extends Activity {
 				
 				if(httpResponse.getStatusLine().getStatusCode() == 201)
 				{
-					result = "Success Registration! "+httpResponse.getStatusLine().toString();
-					
+					result = EntityUtils.toString(httpResponse.getEntity());
 				}
 				else
 				{
 					result = httpResponse.getStatusLine().toString();
-					result += " "+ EntityUtils.toString(httpResponse.getEntity());
 				}
 				
 			}
@@ -281,10 +290,35 @@ public class BorrowBooksActivity extends Activity {
 		protected void onPostExecute(String result)
 		{
 			Dialog.dismiss();
-			checkBookIsValid(result);
+			Toast.makeText(BorrowBooksActivity.this, result, Toast.LENGTH_LONG).show();
+			// TODO if succeed borrowing books, show Sucess borrowing message and should retured date 
 		}
 		
 	}
+	
+	@Override
+    public void onBackPressed()
+    {
+		AlertDialog.Builder builder = new AlertDialog.Builder(BorrowBooksActivity.this);
+		builder.setTitle("Are you sure you want to logout?");
+		
+		builder.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Generic.LID = "";
+				dialog.dismiss();
+				BorrowBooksActivity.this.finish();
+			}
+		});
+		builder.setNegativeButton("No", new DialogInterface.OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.create().show();
+    }
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
