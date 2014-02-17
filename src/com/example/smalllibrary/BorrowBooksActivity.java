@@ -292,6 +292,7 @@ public class BorrowBooksActivity extends Activity {
 			Dialog.dismiss();
 			Toast.makeText(BorrowBooksActivity.this, result, Toast.LENGTH_LONG).show();
 			// TODO if succeed borrowing books, show Sucess borrowing message and should retured date 
+			//test
 		}
 		
 	}
