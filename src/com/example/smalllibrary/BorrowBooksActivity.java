@@ -63,32 +63,39 @@ public class BorrowBooksActivity extends Activity {
 	// ConfirmBorrowBooks button click //
 	////////////////////////////////////
 	public void ConfirmBorrowBooks(View v) {
-		HashMap<String,Object> item;
-		JSONArray jsonArray = new JSONArray();
-		JSONObject jsonObj;
-		
-		String url = Generic.serverurl+"BorrowingRecord/PostBorrowingRecord";
-		
-		for(int i = 0; i < list.size(); i++)
+
+		if(list.size() > 0)
 		{
-			item = new HashMap<String,Object>();
-			jsonObj =  new JSONObject();
+			HashMap<String,Object> item;
+			JSONArray jsonArray = new JSONArray();
+			JSONObject jsonObj;
 			
-			try {
-				item = list.get(i);
-				jsonObj.put("B_id", item.get("id"));
-				jsonObj.put("L_id", Generic.LID);
-				jsonArray.put(jsonObj);
-			}
-			catch(JSONException e)
+			String url = Generic.serverurl+"BorrowingRecord/PostBorrowingRecord";
+			
+			for(int i = 0; i < list.size(); i++)
 			{
-				e.printStackTrace();
+				item = new HashMap<String,Object>();
+				jsonObj =  new JSONObject();
+				
+				try {
+					item = list.get(i);
+					jsonObj.put("B_id", item.get("id"));
+					jsonObj.put("L_id", Generic.LID);
+					jsonArray.put(jsonObj);
+				}
+				catch(JSONException e)
+				{
+					e.printStackTrace();
+				}
 			}
+			
+			String[] params = new String[]{url, jsonArray.toString()};
+			new PostBorrowingRecord().execute(params);
 		}
-		Toast.makeText(BorrowBooksActivity.this, jsonArray.toString(), Toast.LENGTH_LONG).show();
-		
-		String[] params = new String[]{url, jsonArray.toString()};
-		new PostBorrowingRecord().execute(params);
+		else
+		{
+			Toast.makeText(BorrowBooksActivity.this, "None book is in the list.", Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	private void Scan() {
@@ -290,9 +297,10 @@ public class BorrowBooksActivity extends Activity {
 		protected void onPostExecute(String result)
 		{
 			Dialog.dismiss();
-			Toast.makeText(BorrowBooksActivity.this, result, Toast.LENGTH_LONG).show();
-			// TODO if succeed borrowing books, show Sucess borrowing message and should retured date 
-			//test
+			
+			Intent intent = new Intent(BorrowBooksActivity.this, ShowBorrowBooksResultActivity.class);
+			intent.putExtra("BorrowBooksResult", result);
+			startActivity(intent);
 		}
 		
 	}

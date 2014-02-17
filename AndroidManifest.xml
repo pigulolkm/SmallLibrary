@@ -50,6 +50,10 @@
             android:name="com.example.smalllibrary.BorrowBooksLoginActivity"
             android:label="@string/title_activity_borrow_books_login" >
         </activity>
+        <activity
+            android:name="com.example.smalllibrary.ShowBorrowBooksResultActivity"
+            android:label="@string/title_activity_show_borrow_books_result" >
+        </activity>
     </application>
 
 </manifest>

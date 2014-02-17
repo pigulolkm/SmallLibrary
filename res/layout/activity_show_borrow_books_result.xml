@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ShowBorrowBooksResultActivity" >
+	<!--  TODO Create Tab control instead of this -->
+    <ListView
+            android:id="@+id/listViewBorrowBooksSuccessResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    
+    <TextView 
+        android:id="@+id/textV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="--------------BASELINE--------------"/>
+    
+    <ListView
+            android:id="@+id/listViewBorrowBooksFailResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+</LinearLayout>

@@ -9,5 +9,6 @@
     <string name="title_activity_borrow_book">Borrow Book</string>
     <string name="title_activity_borrow_books_login">Borrow Book</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_show_borrow_books_result">Show Borrow Books Result</string>
 
 </resources>
