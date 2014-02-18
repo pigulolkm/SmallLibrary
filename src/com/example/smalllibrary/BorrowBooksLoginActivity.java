@@ -63,7 +63,7 @@ public class BorrowBooksLoginActivity extends Activity {
 						BorrowerToken = results[0];
 						BorrowerEmail = results[1];
 						LID = results[2];
-						String url = Generic.serverurl + "/LibraryUser/GetValidateToken?token="+BorrowerToken+"&email="+BorrowerEmail+"&Lid="+LID;
+						String url = Generic.serverurl + "LibraryUser/GetValidateToken?token="+BorrowerToken+"&email="+BorrowerEmail+"&Lid="+LID;
 						new validateToken().execute(url);
 					}
 					catch(Exception e)
@@ -138,16 +138,19 @@ public class BorrowBooksLoginActivity extends Activity {
 						
 						Dialog.setTitle("Login Success");
 						Dialog.setMessage("Please wait...");
+						
+						
+						
 						// Intent after 3 seconds
 						Timer timer = new Timer();
 						timer.schedule(new TimerTask(){
 							@Override
 							public void run() {
 								Dialog.dismiss();
-								Intent intent = new Intent();
-								intent.setClass(BorrowBooksLoginActivity.this, BorrowBooksActivity.class);
-								intent.putExtra("borrowedAmount", BorrowedAmount);
-								startActivity(intent);
+								Intent i = new Intent();
+								i.setClass(BorrowBooksLoginActivity.this, BorrowBooksActivity.class);
+								i.putExtra("borrowedAmount", BorrowedAmount);
+								startActivity(i);
 							}}, 3000);
 					}
 					else

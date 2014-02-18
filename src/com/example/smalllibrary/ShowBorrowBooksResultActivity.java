@@ -13,12 +13,15 @@ import android.content.Intent;
 import android.view.Menu;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ShowBorrowBooksResultActivity extends Activity {
 	
 	private ListView listViewBorrowBooksSuccessResult;
 	private ListView listViewBorrowBooksFailResult;
+	private TextView textViewBorrowBooksSuccess;
+	private TextView textViewBorrowBooksFail;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +39,13 @@ public class ShowBorrowBooksResultActivity extends Activity {
 	{
 		listViewBorrowBooksSuccessResult = (ListView)findViewById(R.id.listViewBorrowBooksSuccessResult);
 		listViewBorrowBooksFailResult = (ListView)findViewById(R.id.listViewBorrowBooksFailResult);
+		textViewBorrowBooksSuccess = (TextView)findViewById(R.id.textViewBorrowBooksSuccess);
+		textViewBorrowBooksFail = (TextView)findViewById(R.id.textViewBorrowBooksFail);
+		
 	}
 	
 	private void ShowBorrowBooksResult(String result)
-	{
-		// TODO if succeed borrowing books, show Sucess borrowing message and should retured date 
+	{ 
 		/*
 		 * return json pattern
 		 * {
@@ -68,48 +73,58 @@ public class ShowBorrowBooksResultActivity extends Activity {
 			JSONObject jsonSuccessObj;
 			JSONObject jsonFailObj;
 			
-			// Create Success Borrow Book ListView
-			for(int i = 0; i < jsonArraySuccess.length(); i++)
+			int totalBooksBorrow = jsonArraySuccess.length() + jsonArrayFail.length();
+			
+			if(jsonArraySuccess.length() > 0)
 			{
-				jsonSuccessObj = jsonArraySuccess.getJSONObject(i);
-				successItem = new HashMap<String,Object>();
+				// Create Success Borrow Book ListView
+				for(int i = 0; i < jsonArraySuccess.length(); i++)
+				{
+					jsonSuccessObj = jsonArraySuccess.getJSONObject(i);
+					successItem = new HashMap<String,Object>();
+					
+					successItem.put("title", jsonSuccessObj.getString("title"));
+					successItem.put("author", jsonSuccessObj.getString("author"));
+					successItem.put("publisher",jsonSuccessObj.getString("publisher"));
+					successItem.put("publicationDate", jsonSuccessObj.getString("publicationDate"));
+					
+					String[] datetime = jsonSuccessObj.getString("shouldReturnedDate").split("T");
+					successItem.put("shouldReturnedDate", datetime[0]);
+					
+					successList.add(successItem);
+				}
 				
-				successItem.put("title", jsonSuccessObj.getString("title"));
-				successItem.put("author", jsonSuccessObj.getString("author"));
-				successItem.put("publisher",jsonSuccessObj.getString("publisher"));
-				successItem.put("publicationDate", jsonSuccessObj.getString("publicationDate"));
+				SimpleAdapter adapterS = new SimpleAdapter(ShowBorrowBooksResultActivity.this, successList, R.layout.listview_borrow_book_item_success, 
+						new String[]{"title","author","publisher","publicationDate", "shouldReturnedDate"},
+						new int[]{R.id.textViewSuccessBorrowBookTitle, R.id.textViewSuccessBorrowBookAuthor, R.id.textViewSuccessBorrowBookPublisher, R.id.textViewSuccessBorrowBookPublicationDate, R.id.textViewSuccessBorrowBookShouldReturnedDate});
 				
-				String[] datetime = jsonSuccessObj.getString("shouldReturnedDate").split("T");
-				successItem.put("shouldReturnedDate", datetime[0]);
-				
-				successList.add(successItem);
+				listViewBorrowBooksSuccessResult.setAdapter(adapterS);
+				textViewBorrowBooksSuccess.setText("Success Borrow : "+ jsonArraySuccess.length() + " / " + totalBooksBorrow);			
 			}
 			
-			SimpleAdapter adapterS = new SimpleAdapter(ShowBorrowBooksResultActivity.this, successList, R.layout.listview_borrow_book_item_success, 
-					new String[]{"title","author","publisher","publicationDate", "shouldReturnedDate"},
-					new int[]{R.id.textViewSuccessBorrowBookTitle, R.id.textViewSuccessBorrowBookAuthor, R.id.textViewSuccessBorrowBookPublisher, R.id.textViewSuccessBorrowBookPublicationDate, R.id.textViewSuccessBorrowBookShouldReturnedDate});
-			
-			listViewBorrowBooksSuccessResult.setAdapter(adapterS);
-			
-			// Create Fail Borrow Book ListView
-			for(int i = 0; i < jsonArrayFail.length(); i++)
+			if(jsonArrayFail.length() > 0)
 			{
-				jsonFailObj = jsonArrayFail.getJSONObject(i);
-				failItem = new HashMap<String,Object>();
+				// Create Fail Borrow Book ListView
+				for(int i = 0; i < jsonArrayFail.length(); i++)
+				{
+					jsonFailObj = jsonArrayFail.getJSONObject(i);
+					failItem = new HashMap<String,Object>();
+					
+					failItem.put("title", jsonFailObj.getString("B_title"));
+					failItem.put("author", jsonFailObj.getString("B_author"));
+					failItem.put("publisher",jsonFailObj.getString("B_publisher"));
+					failItem.put("publicationDate", jsonFailObj.getString("B_publicationDate"));
+					
+					failList.add(failItem);
+				}
 				
-				failItem.put("title", jsonFailObj.getString("B_title"));
-				failItem.put("author", jsonFailObj.getString("B_author"));
-				failItem.put("publisher",jsonFailObj.getString("B_publisher"));
-				failItem.put("publicationDate", jsonFailObj.getString("B_publicationDate"));
+				SimpleAdapter adapterF = new SimpleAdapter(ShowBorrowBooksResultActivity.this, failList, R.layout.listview_borrow_book_item_fail, 
+						new String[]{"title","author","publisher","publicationDate"},
+						new int[]{R.id.textViewFailBorrowBookTitle, R.id.textViewFailBorrowBookAuthor, R.id.textViewFailBorrowBookPublisher, R.id.textViewFailBorrowBookPublicationDate});
 				
-				failList.add(failItem);
+				listViewBorrowBooksFailResult.setAdapter(adapterF);
+				textViewBorrowBooksFail.setText("Failed Borrow : "+ jsonArrayFail.length() + " / " + totalBooksBorrow);
 			}
-			
-			SimpleAdapter adapterF = new SimpleAdapter(ShowBorrowBooksResultActivity.this, failList, R.layout.listview_borrow_book_item_fail, 
-					new String[]{"title","author","publisher","publicationDate"},
-					new int[]{R.id.textViewFailBorrowBookTitle, R.id.textViewFailBorrowBookAuthor, R.id.textViewFailBorrowBookPublisher, R.id.textViewFailBorrowBookPublicationDate});
-			
-			listViewBorrowBooksFailResult.setAdapter(adapterF);
 		}
 		catch(JSONException e)
 		{

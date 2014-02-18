@@ -4,20 +4,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ShowBorrowBooksResultActivity" >
-	<!--  TODO Create Tab control instead of this -->
+	
+    <TextView 
+        android:id="@+id/textViewBorrowBooksSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ff0000"
+        android:layout_marginLeft="5dp"/>
+    
     <ListView
             android:id="@+id/listViewBorrowBooksSuccessResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     
     <TextView 
-        android:id="@+id/textV"
+        android:id="@+id/textViewBorrowBooksFail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="--------------BASELINE--------------"/>
+        android:textColor="#ff0000"
+        android:layout_marginLeft="5dp"/>
     
     <ListView
             android:id="@+id/listViewBorrowBooksFailResult"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 </LinearLayout>

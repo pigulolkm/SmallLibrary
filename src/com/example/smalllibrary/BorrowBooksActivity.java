@@ -27,12 +27,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class BorrowBooksActivity extends Activity {
 
 	private ListView listViewBorrowBooks;
-	private static int BorrowedAmount = 0;
+	private TextView textViewBorrowBooksCount;
+	private static int BorrowedAmount;
 	
 	private String scanCode = "";
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
@@ -41,15 +43,20 @@ public class BorrowBooksActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_borrow_book);
 		
-		Intent intent = new Intent();
-		BorrowedAmount = intent.getIntExtra("borrowedAmount", 0);
+		Intent intent = getIntent();
+		BorrowedAmount = intent.getIntExtra("borrowedAmount", Generic.borrowingLimit);
 		
 		findViews();
-		// TODO show borrow books; borrowed amount / borrowing Limit in activity_borrow_book
+		init();
 	}
 	
 	private void findViews(){
 		listViewBorrowBooks = (ListView)findViewById(R.id.listViewBorrowBooks);
+		textViewBorrowBooksCount = (TextView)findViewById(R.id.textViewBorrowBooksCount);
+	}
+	
+	private void init(){
+		textViewBorrowBooksCount.setText("Borrow Book Amount : " + BorrowedAmount + " / " + Generic.borrowingLimit);
 	}
 	
 	/////////////////////////////////
@@ -210,6 +217,7 @@ public class BorrowBooksActivity extends Activity {
 						
 						listViewBorrowBooks.setAdapter(adapter);
 						BorrowedAmount += 1;
+						textViewBorrowBooksCount.setText("Borrow Book Amount : " + BorrowedAmount + " / " + Generic.borrowingLimit);
 					}
 				}
 				else
