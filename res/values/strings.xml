@@ -10,5 +10,13 @@
     <string name="title_activity_borrow_books_login">Borrow Book</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_show_borrow_books_result">Show Borrow Books Result</string>
-
+	<string-array name="drawer_menu">
+	    <item>Home</item>
+	    <item>Scan Code</item>
+	    <item>Search Books</item>
+	    <item>Registry Borrowers</item>
+	    <item>Borrow Books</item>
+	</string-array>
+	<string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

@@ -1,62 +1,100 @@
 package com.example.smalllibrary;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.entity.BufferedHttpEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-
 import com.example.smalllibrary.CameraTestActivity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
+	private DrawerLayout layDrawer;
+    private ListView lstDrawer;
+    private String[] drawer_menu;
 
+    private ActionBarDrawerToggle drawerToggle;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_main);
         
         // TODO Admin login
         // TODO Check network
-        init();
+        initActionBar();
+        initDrawer();
+        initDrawerList();
         findViews();
 	}
-	
-	private void init() {
-		
-	}
+    
+    private void initActionBar(){
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+    }
+    
+    private void initDrawer(){
+        setContentView(R.layout.activity_main);
+
+        layDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        lstDrawer = (ListView) findViewById(R.id.left_drawer);
+
+        // set a custom shadow that overlays the main content when the drawer opens
+        layDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        
+        lstDrawer.setOnItemClickListener(new DrawerItemClickListener());
+
+        mTitle = mDrawerTitle = getTitle();
+        drawerToggle = new ActionBarDrawerToggle(
+                this, 
+                layDrawer,
+                R.drawable.ic_drawer, 
+                R.string.drawer_open,
+                R.string.drawer_close) {
+
+            @Override
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(mDrawerTitle);
+            }
+        };
+        drawerToggle.syncState();
+
+        layDrawer.setDrawerListener(drawerToggle);
+    }
+    
+    private void initDrawerList(){
+    	drawer_menu = this.getResources().getStringArray(R.array.drawer_menu);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawer_menu);
+        lstDrawer.setAdapter(adapter);
+    }
 	
 	private void findViews(){
 
 	}
-	 ////////////////////////////
-	/* Scan Code button click */
-    ///////////////////////////
-	public void ScanCode(View v) {
+
+	public void ScanCode() {
 		if(isCameraAvailable())
 		{
 			Intent intent = new Intent();
@@ -64,28 +102,20 @@ public class MainActivity extends Activity {
 			startActivityForResult(intent, Generic.scan_REQUEST);
 		}
 	}
-	 ///////////////////////////////
-	/* Registration button click */
-    //////////////////////////////
-	public void Registration(View v){
+
+	public void Registration(){
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, RegistrationActivity.class);
 		startActivity(intent);
 	}
 	
-	 //////////////////////////////
-	/* SearchBooks button click */
-	/////////////////////////////
-	public void SearchBooks(View v){
+	public void SearchBooks(){
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, SearchBooksActivity.class);
 		startActivity(intent);
 	}
-	
-	 ////////////////////////////////
-	 // Borrow Books button click //
-	 //////////////////////////////
-	public void BorrowBooks(View v) {
+
+	public void BorrowBooks() {
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, BorrowBooksLoginActivity.class);
 		startActivity(intent);
@@ -107,10 +137,74 @@ public class MainActivity extends Activity {
 		}
 	}
 	
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+	    @Override
+	    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	        selectItem(position);
+	    }
+	}
+	
+	private void selectItem(int position) {
+	    switch (position) {
+	    case 0: // Home
+	        break;
+
+	    case 1: // Scan Code
+	    	if(isCameraAvailable())
+	    		ScanCode();
+	        break;
+
+	    case 2: // Search Books
+	    	SearchBooks();
+	        break;
+	        
+	    case 3: // Registry Borrowers
+	    	Registration();
+	        break;
+	        
+	    case 4: // Borrow Books
+	    	BorrowBooks();
+	        break;
+
+	    default:
+	    	
+	        return;
+	    }
+
+	    lstDrawer.setItemChecked(position, true);
+	    setTitle(drawer_menu[position]);
+	    layDrawer.closeDrawer(lstDrawer);
+	}
+	
 	public boolean isCameraAvailable() {
         PackageManager pm = getPackageManager();
         return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    //Home icon is selected
+	    if (drawerToggle.onOptionsItemSelected(item)) {
+	        return true;
+	    }
+	    return super.onOptionsItemSelected(item);
+	}
+	
+
+	@Override
+	public void setTitle(CharSequence title) {
+	    mTitle = title;
+	    getActionBar().setTitle(mTitle);
+	}
+	
+	@Override
+	public void onResume()
+	{
+		if(!getActionBar().getTitle().equals("Home"))
+		{
+			selectItem(0);
+		}
+		super.onResume();
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
