@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
         // TODO Check network
         initActionBar();
         initDrawer();
+        // To set up the list of options on the left slider menu
         initDrawerList();
         findViews();
 	}
