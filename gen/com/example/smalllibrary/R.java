@@ -32,13 +32,13 @@ public final class R {
         public static final int ButtonRegister=0x7f090018;
         public static final int ButtonReset=0x7f090019;
         public static final int ButtonScanBorrowingToken=0x7f090004;
-        public static final int action_settings=0x7f090039;
+        public static final int action_settings=0x7f09003f;
         public static final int btnConfirmBorrowBooks=0x7f090002;
         public static final int btnReset=0x7f090022;
         public static final int btnReturnBooksScan=0x7f09001c;
         public static final int btnScanBook=0x7f090003;
         public static final int btnSeachBooks=0x7f090024;
-        public static final int cameraPreview=0x7f090038;
+        public static final int cameraPreview=0x7f09003e;
         public static final int content_frame=0x7f090006;
         public static final int drawer_layout=0x7f090005;
         public static final int editTextBirthday=0x7f090013;
@@ -82,6 +82,12 @@ public final class R {
         public static final int textViewReturnBooksCount=0x7f09001a;
         public static final int textViewReturnBooksFee=0x7f09001e;
         public static final int textViewReturnBooksOutDate=0x7f09001d;
+        public static final int textViewReturnedBookAuthor=0x7f090039;
+        public static final int textViewReturnedBookFine=0x7f09003d;
+        public static final int textViewReturnedBookPublicationDate=0x7f09003b;
+        public static final int textViewReturnedBookPublisher=0x7f09003a;
+        public static final int textViewReturnedBookReturnedDate=0x7f09003c;
+        public static final int textViewReturnedBookTitle=0x7f090038;
         public static final int textViewSuccessBorrowBookAuthor=0x7f090034;
         public static final int textViewSuccessBorrowBookPublicationDate=0x7f090036;
         public static final int textViewSuccessBorrowBookPublisher=0x7f090035;
@@ -101,7 +107,8 @@ public final class R {
         public static final int listview_book_item=0x7f030009;
         public static final int listview_borrow_book_item_fail=0x7f03000a;
         public static final int listview_borrow_book_item_success=0x7f03000b;
-        public static final int main=0x7f03000c;
+        public static final int listview_return_book_item=0x7f03000c;
+        public static final int main=0x7f03000d;
     }
     public static final class menu {
         public static final int borrow_book=0x7f080000;

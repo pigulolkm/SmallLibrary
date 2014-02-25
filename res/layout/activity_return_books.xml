@@ -38,7 +38,7 @@
     		android:layout_height="wrap_content"
     		android:layout_alignParentRight="true"
     		android:onClick="ScanBooks"
-    	    />
+    		android:text="Scan Book" />
     	 <LinearLayout
     		android:layout_height="wrap_content"
     		android:layout_width="wrap_content"

@@ -127,7 +127,7 @@ public class BorrowBooksActivity extends Activity {
 					// 1. Get scanned book id
 					scanCode = data.getStringExtra("SCAN_RESULT");
 					// 2. Request to server to check the book is valid to borrow
-					String url = "http://piguloming.no-ip.org:90/api/Book/GetBook/"+scanCode;
+					String url = Generic.serverurl+"Book/GetBook/"+scanCode;
 					new GetBookOperation().execute(url);
                 } 
 				else if(resultCode == RESULT_CANCELED) 
