@@ -63,7 +63,20 @@ public class BorrowBooksActivity extends Activity {
 	// ScanMoreBooks button click //
 	///////////////////////////////
 	public void ScanBooks(View v) {
-		Scan();
+		// Check the amount of borrowing book is out of limit
+		if(BorrowedAmount < Generic.borrowingLimit)
+		{
+			if(isCameraAvailable())
+			{
+				Intent intent = new Intent();
+				intent.setClass(BorrowBooksActivity.this, CameraTestActivity.class);
+				startActivityForResult(intent, Generic.scan_REQUEST);
+			}
+		}
+		else
+		{
+			Toast.makeText(BorrowBooksActivity.this, "You have reached the borrowing limit!", Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	//////////////////////////////////////
@@ -102,23 +115,6 @@ public class BorrowBooksActivity extends Activity {
 		else
 		{
 			Toast.makeText(BorrowBooksActivity.this, "None book is in the list.", Toast.LENGTH_LONG).show();
-		}
-	}
-	
-	private void Scan() {
-		// Check the amount of borrowing book is out of limit
-		if(BorrowedAmount < Generic.borrowingLimit)
-		{
-			if(isCameraAvailable())
-			{
-				Intent intent = new Intent();
-				intent.setClass(BorrowBooksActivity.this, CameraTestActivity.class);
-				startActivityForResult(intent, Generic.scan_REQUEST);
-			}
-		}
-		else
-		{
-			Toast.makeText(BorrowBooksActivity.this, "You have reached the borrowing limit!", Toast.LENGTH_LONG).show();
 		}
 	}
 	
