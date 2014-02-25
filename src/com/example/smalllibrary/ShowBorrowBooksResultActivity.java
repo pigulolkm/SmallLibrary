@@ -86,7 +86,7 @@ public class ShowBorrowBooksResultActivity extends Activity {
 					successItem.put("title", jsonSuccessObj.getString("title"));
 					successItem.put("author", jsonSuccessObj.getString("author"));
 					successItem.put("publisher",jsonSuccessObj.getString("publisher"));
-					successItem.put("publicationDate", jsonSuccessObj.getString("publicationDate"));
+					successItem.put("publicationDate", "Published on : "+jsonSuccessObj.getString("publicationDate"));
 					
 					String[] datetime = jsonSuccessObj.getString("shouldReturnedDate").split("T");
 					successItem.put("shouldReturnedDate", datetime[0]);
@@ -113,7 +113,7 @@ public class ShowBorrowBooksResultActivity extends Activity {
 					failItem.put("title", jsonFailObj.getString("B_title"));
 					failItem.put("author", jsonFailObj.getString("B_author"));
 					failItem.put("publisher",jsonFailObj.getString("B_publisher"));
-					failItem.put("publicationDate", jsonFailObj.getString("B_publicationDate"));
+					failItem.put("publicationDate", "Published on : "+jsonFailObj.getString("B_publicationDate"));
 					
 					failList.add(failItem);
 				}

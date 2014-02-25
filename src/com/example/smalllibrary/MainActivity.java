@@ -122,6 +122,12 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	public void ReturnBooks() {
+		Intent intent = new Intent();
+		intent.setClass(MainActivity.this, ReturnBooksActivity.class);
+		startActivity(intent);
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(requestCode) {
@@ -166,6 +172,10 @@ public class MainActivity extends Activity {
 	    case 4: // Borrow Books
 	    	BorrowBooks();
 	        break;
+	    
+	    case 5: // Return Books
+	    	ReturnBooks();
+	    	break;
 
 	    default:
 	    	

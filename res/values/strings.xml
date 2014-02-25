@@ -17,13 +17,14 @@
         <item>Search Books</item>
         <item>Registry Borrowers</item>
         <item>Borrow Books</item>
+        <item>Return Books</item>
     </string-array>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_return_books">ReturnBooksActivity</string>
     <string name="OutDateBooks">Out Date Books Count :</string>
-    <string name="Fine">Fine :</string>
+    <string name="Fine">Fine : $</string>
     <string name="ReturnBookAmount">Return Book Amount : </string>
 
 </resources>

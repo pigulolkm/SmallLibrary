@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
@@ -35,6 +35,9 @@ public class ReturnBooksActivity extends Activity {
 	private ListView listViewReturnBooks;
 	
 	private String scanCode = "";
+	private int totalFine = 0;
+	private int outDateCount = 0;
+	private int returnBookAmount = 0;
 	private ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +58,9 @@ public class ReturnBooksActivity extends Activity {
 	
 	private void init()
 	{
-		textViewReturnBooksCount.setText(getResources().getString(R.string.ReturnBookAmount) + "0");
-		textViewReturnBooksOutDate.setText(getResources().getString(R.string.OutDateBooks)  + "0");
-		textViewReturnBooksFee.setText(getResources().getString(R.string.Fine) + "$ 0");
+		textViewReturnBooksCount.setText(getResources().getString(R.string.ReturnBookAmount) + returnBookAmount);
+		textViewReturnBooksOutDate.setText(getResources().getString(R.string.OutDateBooks)  + outDateCount);
+		textViewReturnBooksFee.setText(getResources().getString(R.string.Fine) + totalFine);
 	}
 	
 	/////////////////////////////////
@@ -115,8 +118,8 @@ public class ReturnBooksActivity extends Activity {
 			String result = null;
 			try
 			{
-				HttpGet httpGet = new HttpGet(urls[0]);
-				HttpResponse httpResponse = client.execute(httpGet);
+				HttpPut httpPut = new HttpPut(urls[0]);
+				HttpResponse httpResponse = client.execute(httpPut);
 				if(httpResponse.getStatusLine().getStatusCode() == 200)
 				{
 					result = EntityUtils.toString(httpResponse.getEntity());
@@ -139,6 +142,7 @@ public class ReturnBooksActivity extends Activity {
 		protected void onPostExecute(String result)
 		{
 			Dialog.dismiss();
+			Toast.makeText(ReturnBooksActivity.this, result, Toast.LENGTH_LONG).show();
 			try {
 				JSONObject jsonObj = new JSONObject(result);
 				String res = jsonObj.getString("Result");
@@ -157,6 +161,7 @@ public class ReturnBooksActivity extends Activity {
 							dialog.cancel();
 						}	
 					});
+					alertDialog.create().show();
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -173,21 +178,38 @@ public class ReturnBooksActivity extends Activity {
 			item.put("title", returnBooks.getString("title"));
 			item.put("author", returnBooks.getString("author"));
 			item.put("publisher",returnBooks.getString("publisher"));
-			item.put("publicationDate", returnBooks.getString("publicationDate"));
-			item.put("returnedDate", returnBooks.getString("returnedDate"));
-			item.put("fine", returnBooks.getString("fine"));
+			item.put("publicationDate", "Published on : "+returnBooks.getString("publicationDate"));
+			
+			if(returnBooks.getString("fine").equals("0.0"))
+			{
+				item.put("fine", "0");
+			}
+			else
+			{
+				outDateCount += 1;
+			}
 			list.add(item);
 			
 			SimpleAdapter adapter = new SimpleAdapter(ReturnBooksActivity.this, list, R.layout.listview_return_book_item, 
-					new String[]{"title","author","publisher","publicationDate", "returnedDate", "fine"},
-					new int[]{R.id.textViewReturnedBookTitle, R.id.textViewReturnedBookAuthor, R.id.textViewReturnedBookPublisher, R.id.textViewReturnedBookPublicationDate, R.id.textViewReturnedBookReturnedDate, R.id.textViewReturnedBookFine});
+					new String[]{"title","author","publisher","publicationDate", "fine"},
+					new int[]{R.id.textViewReturnedBookTitle, R.id.textViewReturnedBookAuthor, R.id.textViewReturnedBookPublisher, R.id.textViewReturnedBookPublicationDate, R.id.textViewReturnedBookFine});
 			
 			listViewReturnBooks.setAdapter(adapter);
+			
+			// Set Total Fine
+			totalFine += Integer.parseInt(returnBooks.getString("fine"));
+			textViewReturnBooksFee.setText(getResources().getString(R.string.Fine) + totalFine);
+			
+			// Set Book Amount
+			returnBookAmount += 1;
+			textViewReturnBooksCount.setText(getResources().getString(R.string.ReturnBookAmount) + returnBookAmount);
+			
+			//Set Out Date Count
+			textViewReturnBooksOutDate.setText(getResources().getString(R.string.OutDateBooks)  + outDateCount);
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public boolean isCameraAvailable() {
