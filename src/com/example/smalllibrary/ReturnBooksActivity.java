@@ -35,7 +35,7 @@ public class ReturnBooksActivity extends Activity {
 	private ListView listViewReturnBooks;
 	
 	private String scanCode = "";
-	private int totalFine = 0;
+	private double totalFine = 0;
 	private int outDateCount = 0;
 	private int returnBookAmount = 0;
 	private ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
@@ -107,7 +107,7 @@ public class ReturnBooksActivity extends Activity {
 		
 		@Override
 		protected void onPreExecute() {
-			Dialog.setCancelable(true);
+			Dialog.setCancelable(false);
 			Dialog.setTitle("Loading");
 			Dialog.setMessage("Please wait...");
 			Dialog.show();
@@ -142,7 +142,6 @@ public class ReturnBooksActivity extends Activity {
 		protected void onPostExecute(String result)
 		{
 			Dialog.dismiss();
-			Toast.makeText(ReturnBooksActivity.this, result, Toast.LENGTH_LONG).show();
 			try {
 				JSONObject jsonObj = new JSONObject(result);
 				String res = jsonObj.getString("Result");
@@ -182,11 +181,12 @@ public class ReturnBooksActivity extends Activity {
 			
 			if(returnBooks.getString("fine").equals("0.0"))
 			{
-				item.put("fine", "0");
+				item.put("fine", "Fine : $0");
 			}
 			else
 			{
 				outDateCount += 1;
+				item.put("fine", "Fine : $"+returnBooks.getString("fine"));
 			}
 			list.add(item);
 			
@@ -197,7 +197,7 @@ public class ReturnBooksActivity extends Activity {
 			listViewReturnBooks.setAdapter(adapter);
 			
 			// Set Total Fine
-			totalFine += Integer.parseInt(returnBooks.getString("fine"));
+			totalFine += Double.parseDouble(returnBooks.getString("fine"));
 			textViewReturnBooksFee.setText(getResources().getString(R.string.Fine) + totalFine);
 			
 			// Set Book Amount
