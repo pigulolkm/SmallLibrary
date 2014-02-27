@@ -22,7 +22,7 @@
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="title_activity_return_books">ReturnBooksActivity</string>
+    <string name="title_activity_return_books">Return Books</string>
     <string name="OutDateBooks">Out Date Books Count :</string>
     <string name="Fine">Fine : $</string>
     <string name="ReturnBookAmount">Return Book Amount : </string>

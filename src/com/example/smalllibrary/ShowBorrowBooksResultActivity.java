@@ -8,9 +8,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -27,6 +29,9 @@ public class ShowBorrowBooksResultActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_borrow_books_result);
+		
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		Intent intent = getIntent();
 		String result = intent.getStringExtra("BorrowBooksResult");
@@ -138,5 +143,13 @@ public class ShowBorrowBooksResultActivity extends Activity {
 		getMenuInflater().inflate(R.menu.show_borrow_books_result, menu);
 		return true;
 	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {       
+		if(menuItem.getItemId() == android.R.id.home)
+			startActivity(new Intent(ShowBorrowBooksResultActivity.this,BorrowBooksActivity.class)); 
+        return true;
+    }
 
 }

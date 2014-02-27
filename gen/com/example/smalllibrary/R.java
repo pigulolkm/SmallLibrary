@@ -25,13 +25,15 @@ public final class R {
     }
     public static final class drawable {
         public static final int drawer_shadow=0x7f020000;
-        public static final int ic_drawer=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
+        public static final int ic_action_new_label=0x7f020001;
+        public static final int ic_drawer=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
     }
     public static final class id {
         public static final int ButtonRegister=0x7f090018;
         public static final int ButtonReset=0x7f090019;
         public static final int ButtonScanBorrowingToken=0x7f090004;
+        public static final int action_renew=0x7f09003f;
         public static final int action_settings=0x7f09003e;
         public static final int btnConfirmBorrowBooks=0x7f090002;
         public static final int btnReset=0x7f090022;

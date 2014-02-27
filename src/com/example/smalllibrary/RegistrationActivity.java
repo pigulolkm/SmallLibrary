@@ -20,11 +20,14 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
@@ -40,6 +43,9 @@ public class RegistrationActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registration);
+		
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		init();
 		findViews();
@@ -200,5 +206,13 @@ public class RegistrationActivity extends Activity {
 		getMenuInflater().inflate(R.menu.registration, menu);
 		return true;
 	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {       
+		if(menuItem.getItemId() == android.R.id.home)
+			startActivity(new Intent(RegistrationActivity.this,MainActivity.class)); 
+        return true;
+    }
 
 }

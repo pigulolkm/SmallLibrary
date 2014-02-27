@@ -8,13 +8,17 @@ import org.apache.http.util.EntityUtils;
 
 
 
+
+
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -36,6 +40,9 @@ public class SearchBooksActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_books);
 		 	    
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		
 	    init();
         findViews();
         setListener();
@@ -183,5 +190,12 @@ public class SearchBooksActivity extends Activity {
 		getMenuInflater().inflate(R.menu.search_books, menu);
 		return true;
 	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {       
+        startActivity(new Intent(SearchBooksActivity.this,MainActivity.class)); 
+        return true;
+    }
 
 }

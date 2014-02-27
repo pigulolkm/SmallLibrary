@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,6 +23,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.text.InputType;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -37,6 +39,9 @@ public class BorrowBooksLoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_borrow_books_login);
+		
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		// TODO add email & password validation instead of checking by QR token
 	}
@@ -223,5 +228,14 @@ public class BorrowBooksLoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.borrow_books_login, menu);
 		return true;
 	}
-
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {       
+		if(menuItem.getItemId() == android.R.id.home)
+		{
+			onBackPressed();
+		}
+        return true;
+    }
 }

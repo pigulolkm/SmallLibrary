@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -21,6 +22,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -44,6 +46,9 @@ public class ReturnBooksActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_return_books);
 		
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		
 		findViews();
 		init();
 	}
@@ -61,6 +66,17 @@ public class ReturnBooksActivity extends Activity {
 		textViewReturnBooksCount.setText(getResources().getString(R.string.ReturnBookAmount) + returnBookAmount);
 		textViewReturnBooksOutDate.setText(getResources().getString(R.string.OutDateBooks)  + outDateCount);
 		textViewReturnBooksFee.setText(getResources().getString(R.string.Fine) + totalFine);
+	}
+	
+	private void reset()
+	{
+		totalFine = 0;
+		outDateCount = 0;
+		returnBookAmount = 0;
+		list.clear();
+		ListViewSetAdapter(list);
+		
+		init();
 	}
 	
 	/////////////////////////////////
@@ -190,11 +206,7 @@ public class ReturnBooksActivity extends Activity {
 			}
 			list.add(item);
 			
-			SimpleAdapter adapter = new SimpleAdapter(ReturnBooksActivity.this, list, R.layout.listview_return_book_item, 
-					new String[]{"title","author","publisher","publicationDate", "fine"},
-					new int[]{R.id.textViewReturnedBookTitle, R.id.textViewReturnedBookAuthor, R.id.textViewReturnedBookPublisher, R.id.textViewReturnedBookPublicationDate, R.id.textViewReturnedBookFine});
-			
-			listViewReturnBooks.setAdapter(adapter);
+			ListViewSetAdapter(list);
 			
 			// Set Total Fine
 			totalFine += Double.parseDouble(returnBooks.getString("fine"));
@@ -212,6 +224,15 @@ public class ReturnBooksActivity extends Activity {
 		}
 	}
 	
+	private void ListViewSetAdapter(ArrayList<HashMap<String,Object>> list)
+	{
+		SimpleAdapter adapter = new SimpleAdapter(ReturnBooksActivity.this, list, R.layout.listview_return_book_item, 
+				new String[]{"title","author","publisher","publicationDate", "fine"},
+				new int[]{R.id.textViewReturnedBookTitle, R.id.textViewReturnedBookAuthor, R.id.textViewReturnedBookPublisher, R.id.textViewReturnedBookPublicationDate, R.id.textViewReturnedBookFine});
+		
+		listViewReturnBooks.setAdapter(adapter);
+	}
+	
 	public boolean isCameraAvailable() {
         PackageManager pm = getPackageManager();
         return pm.hasSystemFeature(PackageManager.FEATURE_CAMERA);
@@ -222,6 +243,46 @@ public class ReturnBooksActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.return_books, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch(item.getItemId()){
+	        case R.id.action_renew:
+	        	if(totalFine > 0)
+	        	{
+		            AlertDialog.Builder dialog = new AlertDialog.Builder(ReturnBooksActivity.this);
+		            dialog.setTitle("Return Book Fine");
+		            dialog.setMessage("Total Fine : $" + totalFine);
+		            dialog.setIcon(android.R.drawable.ic_dialog_info);
+		            dialog.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							reset();
+							dialog.dismiss();
+						}
+		            });
+		            dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+		            });
+		            dialog.create().show();
+	        	}
+	        	else
+	        	{
+	        		reset();
+	        	}
+	            return true;
+	        case android.R.id.home:
+	        	startActivity(new Intent(ReturnBooksActivity.this,MainActivity.class)); 
+	        	return true;
+	    }
+
+	    return false;
 	}
 
 }
