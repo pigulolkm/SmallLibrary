@@ -94,7 +94,7 @@ public class ShowBorrowBooksResultActivity extends Activity {
 					successItem.put("publicationDate", "Published on : "+jsonSuccessObj.getString("publicationDate"));
 					
 					String[] datetime = jsonSuccessObj.getString("shouldReturnedDate").split("T");
-					successItem.put("shouldReturnedDate", datetime[0]);
+					successItem.put("shouldReturnedDate", "Should return on : "+datetime[0]);
 					
 					successList.add(successItem);
 				}

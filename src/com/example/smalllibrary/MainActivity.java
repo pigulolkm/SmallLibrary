@@ -26,8 +26,7 @@ public class MainActivity extends Activity {
     private String[] drawer_menu;
 
     private ActionBarDrawerToggle drawerToggle;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
+    private CharSequence mDrawerTitle = "Home";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +40,7 @@ public class MainActivity extends Activity {
         initDrawer();
         // To set up the list of options on the left slider menu
         initDrawerList();
+        getActionBar().setTitle(getTitle());
         findViews();
 	}
     
@@ -60,7 +60,6 @@ public class MainActivity extends Activity {
         
         lstDrawer.setOnItemClickListener(new DrawerItemClickListener());
 
-        mTitle = mDrawerTitle = getTitle();
         drawerToggle = new ActionBarDrawerToggle(
                 this, 
                 layDrawer,
@@ -71,7 +70,7 @@ public class MainActivity extends Activity {
             @Override
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
+                getActionBar().setTitle(getTitle());
             }
 
             @Override
@@ -183,7 +182,7 @@ public class MainActivity extends Activity {
 	    }
 
 	    lstDrawer.setItemChecked(position, true);
-	    setTitle(drawer_menu[position]);
+	    // setTitle(drawer_menu[position]);
 	    layDrawer.closeDrawer(lstDrawer);
 	}
 	
@@ -203,8 +202,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void setTitle(CharSequence title) {
-	    mTitle = title;
-	    getActionBar().setTitle(mTitle);
+	    getActionBar().setTitle(title);
 	}
 	
 	@Override
