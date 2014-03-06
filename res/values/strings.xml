@@ -18,6 +18,7 @@
         <item>Registry Borrowers</item>
         <item>Borrow Books</item>
         <item>Return Books</item>
+        <item>Update Rules</item>
     </string-array>
 
     <string name="drawer_open">Open navigation drawer</string>
@@ -26,5 +27,6 @@
     <string name="OutDateBooks">Out Date Books Count :</string>
     <string name="Fine">Fine : $</string>
     <string name="ReturnBookAmount">Return Book Amount : </string>
+    <string name="title_activity_update_rule">Update Rules</string>
 
 </resources>

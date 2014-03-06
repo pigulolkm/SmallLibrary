@@ -127,6 +127,12 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	public void UpdateRules() {
+		Intent intent = new Intent();
+		intent.setClass(MainActivity.this, UpdateRuleActivity.class);
+		startActivity(intent);
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(requestCode) {
@@ -175,6 +181,8 @@ public class MainActivity extends Activity {
 	    case 5: // Return Books
 	    	ReturnBooks();
 	    	break;
+	    case 6: // Update Rules
+	    	UpdateRules();
 
 	    default:
 	    	

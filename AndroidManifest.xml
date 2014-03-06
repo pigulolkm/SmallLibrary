@@ -18,8 +18,9 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-        <!-- android:theme="@style/AppTheme" >  -->
+        android:theme="@style/AppTheme" >
+
+        <!-- android:theme="@style/AppTheme" > -->
         <activity
             android:name="com.example.smalllibrary.MainActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -72,6 +73,10 @@
         <activity
             android:name="com.example.smalllibrary.ReturnBooksActivity"
             android:label="@string/title_activity_return_books" >
+        </activity>
+        <activity
+            android:name="com.example.smalllibrary.UpdateRuleActivity"
+            android:label="@string/title_activity_update_rule" >
         </activity>
     </application>
 
