@@ -100,7 +100,7 @@ public class UpdateRuleActivity extends Activity {
 		
 		@Override
 		protected void onPreExecute() {			
-			Dialog.setCancelable(true);
+			Dialog.setCancelable(false);
 			Dialog.setTitle("Loading");
 			Dialog.setMessage("Please wait...");
 			Dialog.show();

@@ -68,8 +68,8 @@
             android:id="@+id/editTextBorrowingLimit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="5"
             android:inputType="number"
+            android:ems="5"
             android:maxLength="5" />
 
         <EditText
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:ems="5"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:maxLength="5" />
     </LinearLayout>
 
