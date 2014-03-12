@@ -1,11 +1,8 @@
 package com.example.smalllibrary;
 
 import com.example.smalllibrary.CameraTestActivity;
-
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -36,6 +33,7 @@ public class MainActivity extends Activity {
         
         // TODO Admin login
         // TODO Check network
+        
         initActionBar();
         initDrawer();
         // To set up the list of options on the left slider menu
@@ -43,6 +41,11 @@ public class MainActivity extends Activity {
         getActionBar().setTitle(getTitle());
         findViews();
 	}
+    
+    private void findViews(){
+		
+	}
+    
     
     private void initActionBar(){
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -89,10 +92,6 @@ public class MainActivity extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawer_menu);
         lstDrawer.setAdapter(adapter);
     }
-	
-	private void findViews(){
-
-	}
 
 	public void ScanCode() {
 		if(isCameraAvailable())

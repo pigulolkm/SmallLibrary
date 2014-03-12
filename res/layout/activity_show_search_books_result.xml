@@ -2,11 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background2"
+    android:alpha="0.7"
     tools:context=".ShowSearchBooksResultActivity" >
-
     <ListView
             android:id="@+id/listViewSearchResult"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="#80ffffff" />
 
 </LinearLayout>

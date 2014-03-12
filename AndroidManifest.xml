@@ -23,7 +23,6 @@
         <!-- android:theme="@style/AppTheme" > -->
         <activity
             android:name="com.example.smalllibrary.MainActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -36,47 +35,44 @@
         </activity>
         <activity
             android:name="com.example.smalllibrary.RegistrationActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_registration"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.example.smalllibrary.SearchBooksActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_search_books"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.example.smalllibrary.ShowSearchBooksResultActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_show_search_books_result"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.example.smalllibrary.BorrowBooksActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_borrow_book"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.example.smalllibrary.BorrowBooksLoginActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_borrow_books_login"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.example.smalllibrary.ShowBorrowBooksResultActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_show_borrow_books_result"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.example.smalllibrary.ReturnBooksActivity"
-            android:label="@string/title_activity_return_books" >
+            android:label="@string/title_activity_return_books"
+            android:screenOrientation="portrait"  >
         </activity>
         <activity
             android:name="com.example.smalllibrary.UpdateRuleActivity"
-            android:label="@string/title_activity_update_rule" >
+            android:label="@string/title_activity_update_rule"
+            android:screenOrientation="portrait"  >
         </activity>
     </application>
 
