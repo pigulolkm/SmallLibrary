@@ -11,6 +11,7 @@
 	    android:paddingLeft="@dimen/activity_horizontal_margin"
 	    android:paddingRight="@dimen/activity_horizontal_margin"
 	    android:paddingTop="@dimen/activity_vertical_margin"
+	    android:layout_margin="10dp"
 	    android:background="#80ffffff" >
 	    <Button
 	        android:id="@+id/ButtonScanBorrowingToken"

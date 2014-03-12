@@ -12,7 +12,8 @@
 	    android:paddingLeft="@dimen/activity_horizontal_margin"
 	    android:paddingRight="@dimen/activity_horizontal_margin"
 	    android:paddingTop="@dimen/activity_vertical_margin"
-	    android:background="#80ffffff">
+	    android:background="#80ffffff"
+	    android:layout_margin="10dp" >
 	    <LinearLayout
 	        android:id="@+id/layout1"
 	        android:layout_width="wrap_content"

@@ -352,7 +352,8 @@ public class BorrowBooksActivity extends Activity {
 	@Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {       
-        startActivity(new Intent(BorrowBooksActivity.this,BorrowBooksLoginActivity.class)); 
+		onBackPressed();
+       // startActivity(new Intent(BorrowBooksActivity.this,BorrowBooksLoginActivity.class)); 
         return true;
     }
 }
