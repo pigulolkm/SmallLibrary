@@ -28,5 +28,6 @@
     <string name="Fine">Fine : $</string>
     <string name="ReturnBookAmount">Return Book Amount : </string>
     <string name="title_activity_update_rule">Update Rules</string>
+    <string name="warning_networkConnectionError">Oops! There was a problem connecting to the Internet. Please try again later.</string>
 
 </resources>

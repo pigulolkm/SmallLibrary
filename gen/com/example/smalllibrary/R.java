@@ -155,6 +155,7 @@ public final class R {
         public static final int title_activity_show_borrow_books_result=0x7f050008;
         public static final int title_activity_show_search_books_result=0x7f050004;
         public static final int title_activity_update_rule=0x7f05000f;
+        public static final int warning_networkConnectionError=0x7f050010;
     }
     public static final class style {
         /** 

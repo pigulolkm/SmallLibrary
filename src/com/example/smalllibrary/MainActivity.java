@@ -5,6 +5,8 @@ import com.example.smalllibrary.CameraTestActivity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -30,11 +32,28 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_main);
         
+        // Check network
+        if(Generic.isOnline(this))
+        {
+        	
+        }
+        else
+        {
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        	dialog.setTitle("Warning");
+        	dialog.setMessage(getResources().getString(R.string.warning_networkConnectionError));
+        	dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+        	}).create().show();;
+        }
+        
         // TODO Admin login
-        // TODO Check network
         
         initActionBar();
         initDrawer();
@@ -42,6 +61,8 @@ public class MainActivity extends Activity {
         initDrawerList();
         getActionBar().setTitle(getTitle());
         findViews();
+        
+        
 	}
     
     private void findViews(){
