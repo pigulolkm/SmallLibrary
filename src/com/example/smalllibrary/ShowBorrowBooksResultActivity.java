@@ -148,7 +148,8 @@ public class ShowBorrowBooksResultActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {       
 		if(menuItem.getItemId() == android.R.id.home)
-			startActivity(new Intent(ShowBorrowBooksResultActivity.this,BorrowBooksActivity.class)); 
+			Generic.LID = "";
+			startActivity(new Intent(ShowBorrowBooksResultActivity.this,BorrowBooksLoginActivity.class)); 
         return true;
     }
 

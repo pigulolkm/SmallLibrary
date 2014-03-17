@@ -1,6 +1,8 @@
 package com.example.smalllibrary;
 
 import com.example.smalllibrary.CameraTestActivity;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -138,7 +140,9 @@ public class MainActivity extends Activity {
 			case Generic.scan_REQUEST:
 				if(resultCode == RESULT_OK)
 				{
-					Toast.makeText(this, "Scan Result = " + data.getStringExtra("SCAN_RESULT"), Toast.LENGTH_LONG).show();
+					Intent intent = new Intent(Intent.ACTION_VIEW);
+					intent.setData(Uri.parse(data.getStringExtra("SCAN_RESULT")));
+					startActivity(intent);
                 } 
 				else if(resultCode == RESULT_CANCELED) 
 				{

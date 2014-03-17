@@ -45,7 +45,10 @@ public class BorrowBooksLoginActivity extends Activity {
 		
 		// TODO add email & password validation instead of checking by QR token
 	}
-
+	
+	////////////////////////////////////
+	// ButtonScanBorrowingToken Click //
+	////////////////////////////////////
 	public void ScanBorrowingToken(View v)
 	{		
 		if(isCameraAvailable())
@@ -53,6 +56,19 @@ public class BorrowBooksLoginActivity extends Activity {
 			Intent intent = new Intent();
 			intent.setClass(BorrowBooksLoginActivity.this, CameraTestActivity.class);
 			startActivityForResult(intent, Generic.scan_REQUEST);
+		}
+	}
+	
+	///////////////////////////////////
+	// ButtonScanBorrowingCard Click //
+	///////////////////////////////////
+	public void ScanBorrowingCard(View v)
+	{
+		if(isCameraAvailable())
+		{
+			Intent intent = new Intent();
+			intent.setClass(BorrowBooksLoginActivity.this, CameraTestActivity.class);
+			startActivityForResult(intent, Generic.scan_REQUEST_Card);
 		}
 	}
 	
@@ -81,6 +97,24 @@ public class BorrowBooksLoginActivity extends Activity {
 					Toast.makeText(this, "Invalid code", Toast.LENGTH_LONG).show();
                 }
                 break;
+			case Generic.scan_REQUEST_Card:
+				if(resultCode == RESULT_OK)
+				{
+					try
+					{
+						String result = data.getStringExtra("SCAN_RESULT");
+						String url = Generic.serverurl + "LibraryUser/GetValidateCard?cardID="+result;
+						new validateCard().execute(url);
+					}
+					catch(Exception e)
+					{
+						Toast.makeText(BorrowBooksLoginActivity.this, "Invalid code", Toast.LENGTH_LONG).show();
+					}
+				}
+				else if(resultCode == RESULT_CANCELED)
+				{
+					Toast.makeText(this, "Invalid code", Toast.LENGTH_LONG).show();
+				}
 		}
 	}
 	
@@ -144,7 +178,101 @@ public class BorrowBooksLoginActivity extends Activity {
 						Dialog.setTitle("Login Success");
 						Dialog.setMessage("Please wait...");
 						
+						// Intent after 3 seconds
+						Timer timer = new Timer();
+						timer.schedule(new TimerTask(){
+							@Override
+							public void run() {
+								Dialog.dismiss();
+								Intent i = new Intent();
+								i.setClass(BorrowBooksLoginActivity.this, BorrowBooksActivity.class);
+								i.putExtra("borrowedAmount", BorrowedAmount);
+								startActivity(i);
+							}}, 3000);
+					}
+					else
+					{
+						Dialog.dismiss();
 						
+						AlertDialog.Builder builder = new AlertDialog.Builder(BorrowBooksLoginActivity.this);
+						builder.setMessage("Invalid code!");
+						builder.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+							@Override
+							public void onClick(DialogInterface dialog,	int which) {
+								dialog.dismiss();
+							}
+						});
+						builder.create().show();
+					}
+				}
+			}
+			catch(JSONException e)
+			{
+				
+			}
+			
+		}
+	}
+	
+private class validateCard extends AsyncTask<String, Void, String>{
+		
+		private final HttpClient  client = new DefaultHttpClient();
+		private ProgressDialog Dialog = new ProgressDialog(BorrowBooksLoginActivity.this);
+		
+		@Override
+		protected void onPreExecute() {
+			Dialog.setCancelable(true);
+			Dialog.setTitle("Logging in");
+			Dialog.setMessage("Connecting...");
+			Dialog.show();
+		}
+		
+		@Override
+		protected String doInBackground(String... params) {
+			
+			String result = null;
+			try
+			{
+				HttpGet httpGet = new HttpGet(params[0]);
+				HttpResponse httpResponse = client.execute(httpGet);
+				if(httpResponse.getStatusLine().getStatusCode() == 200)
+				{
+					result = EntityUtils.toString(httpResponse.getEntity());
+					
+				}
+				else
+				{
+					result = httpResponse.getStatusLine().toString();
+				}
+				
+			}
+			catch(Exception e)
+			{
+				
+			}
+			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(String result)
+		{
+			
+			try 
+			{
+				JSONArray jsonArray = new JSONArray(result);
+				
+				if(jsonArray.length() != 0)
+				{
+					JSONObject jsonObj = jsonArray.getJSONObject(0);
+					// True means token is correct
+					if(jsonObj.getString("result").equals("True"))
+					{
+						BorrowedAmount = Integer.parseInt(jsonObj.getString("borrowedAmount"));
+						Generic.borrowingLimit = Integer.parseInt(jsonObj.getString("borrowingLimit"));
+						Generic.LID = jsonObj.getString("LID");
+						
+						Dialog.setTitle("Login Success");
+						Dialog.setMessage("Please wait...");
 						
 						// Intent after 3 seconds
 						Timer timer = new Timer();

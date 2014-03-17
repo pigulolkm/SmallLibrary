@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 
 public class Generic {
 	public static final int scan_REQUEST = 1;
+	public static final int scan_REQUEST_Card = 2;
 	public static String serverurl = "http://piguloming.no-ip.org:90/api/";
 	public static String LID = "";
 	public static int borrowingLimit = 0;
