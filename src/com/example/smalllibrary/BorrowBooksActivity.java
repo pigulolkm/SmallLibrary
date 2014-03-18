@@ -80,7 +80,15 @@ public class BorrowBooksActivity extends Activity {
 		}
 		else
 		{
-			Toast.makeText(BorrowBooksActivity.this, "You have reached the borrowing limit!", Toast.LENGTH_LONG).show();
+			AlertDialog.Builder dialog = new AlertDialog.Builder(BorrowBooksActivity.this);
+	         dialog.setTitle("You have reached the borrowing limit!");
+	         dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+	         });
+	         dialog.create().show();
 		}
 	}
 	
@@ -119,7 +127,15 @@ public class BorrowBooksActivity extends Activity {
 		}
 		else
 		{
-			Toast.makeText(BorrowBooksActivity.this, "None book is in the list.", Toast.LENGTH_LONG).show();
+			AlertDialog.Builder dialog = new AlertDialog.Builder(BorrowBooksActivity.this);
+	         dialog.setTitle("None book is in the list");
+	         dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+	         });
+	         dialog.create().show();
 		}
 	}
 	
@@ -223,12 +239,28 @@ public class BorrowBooksActivity extends Activity {
 				}
 				else
 				{
-					Toast.makeText(BorrowBooksActivity.this, jsonObj.getString("B_title")+" cannot be borrowed. The book's status is 'Not allowed'.", Toast.LENGTH_LONG).show();
+					AlertDialog.Builder dialog = new AlertDialog.Builder(BorrowBooksActivity.this);
+			         dialog.setTitle(jsonObj.getString("B_title")+" cannot be borrowed. The book's status is 'Not allowed'.");
+			         dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+			         });
+			         dialog.create().show();
 				}
 			}
 			else
 			{
-				Toast.makeText(BorrowBooksActivity.this, "Invalid Code: "+scanCode, Toast.LENGTH_LONG).show();
+				AlertDialog.Builder dialog = new AlertDialog.Builder(BorrowBooksActivity.this);
+		         dialog.setTitle("Invalid Code: "+scanCode);
+		         dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+		         });
+		         dialog.create().show();
 			}			
 		} catch (JSONException e) {
 			if(result.contains("404"))
@@ -245,7 +277,15 @@ public class BorrowBooksActivity extends Activity {
 			try {
 				if(item.get("id").equals(jsonObj.getString("B_id")))
 				{
-					Toast.makeText(BorrowBooksActivity.this, "This book has already added into the list.", Toast.LENGTH_LONG).show();
+					AlertDialog.Builder dialog = new AlertDialog.Builder(BorrowBooksActivity.this);
+			         dialog.setTitle("This book has already added into the list.");
+			         dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+			         });
+			         dialog.create().show();
 					return true;
 				}
 			} 

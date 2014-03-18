@@ -63,7 +63,6 @@ public class ShowBorrowBooksResultActivity extends Activity {
 		 * 		]	
 		 * }
 		 */
-		//Toast.makeText(ShowBorrowBooksResultActivity.this, result, Toast.LENGTH_LONG).show();
 		
 		ArrayList<HashMap<String,Object>> successList = new ArrayList<HashMap<String,Object>>();
 		ArrayList<HashMap<String,Object>> failList = new ArrayList<HashMap<String,Object>>();

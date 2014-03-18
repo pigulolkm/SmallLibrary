@@ -1,38 +1,31 @@
 package com.example.smalllibrary;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class RegistrationActivity extends Activity {
 	
@@ -195,7 +188,15 @@ public class RegistrationActivity extends Activity {
 		protected void onPostExecute(String result)
 		{
 			Dialog.dismiss();
-			Toast.makeText(RegistrationActivity.this, result, Toast.LENGTH_LONG).show();
+			AlertDialog.Builder dialog = new AlertDialog.Builder(RegistrationActivity.this);
+	         dialog.setTitle("Success! You are registered!");
+	         dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+	         });
+	         dialog.create().show();
 		}
 		
 	}
