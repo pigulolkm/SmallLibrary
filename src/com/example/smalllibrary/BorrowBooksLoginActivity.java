@@ -85,7 +85,11 @@ public class BorrowBooksLoginActivity extends Activity {
 						BorrowerEmail = results[1];
 						LID = results[2];
 						String url = Generic.serverurl + "LibraryUser/GetValidateToken?token="+BorrowerToken+"&email="+BorrowerEmail+"&Lid="+LID;
-						new validateToken().execute(url);
+						
+						if(checkNetworkState())
+						{
+							new validateToken().execute(url);
+						}
 					}
 					catch(Exception e)
 					{
@@ -104,7 +108,11 @@ public class BorrowBooksLoginActivity extends Activity {
 					{
 						String result = data.getStringExtra("SCAN_RESULT");
 						String url = Generic.serverurl + "LibraryUser/GetValidateCard?cardID="+result;
-						new validateCard().execute(url);
+						
+						if(checkNetworkState())
+						{
+							new validateCard().execute(url);
+						}
 					}
 					catch(Exception e)
 					{
@@ -378,4 +386,26 @@ private class validateCard extends AsyncTask<String, Void, String>{
 		}
         return true;
     }
+	
+	private boolean checkNetworkState()
+	{
+		if(Generic.isOnline(this))
+		{
+			return true;
+		}
+		else
+        {
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        	dialog.setTitle("Warning");
+        	dialog.setMessage(getResources().getString(R.string.warning_networkConnectionError));
+        	dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+        	}).create().show();;
+        }
+		return false;
+	}
 }

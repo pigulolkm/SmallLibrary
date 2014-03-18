@@ -128,7 +128,10 @@ public class RegistrationActivity extends Activity {
 			jsonObj.put("L_birthday", etBirthday.getText());
 			jsonObj.put("L_password", Generic.computeHash(etPassword.getText().toString()));
 			
-			new PostRegistration().execute(jsonObj);
+			if(checkNetworkState())
+			{
+				new PostRegistration().execute(jsonObj);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -220,5 +223,27 @@ public class RegistrationActivity extends Activity {
 		}
         return true;
     }
+	
+	private boolean checkNetworkState()
+	{
+		if(Generic.isOnline(this))
+		{
+			return true;
+		}
+		else
+        {
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        	dialog.setTitle("Warning");
+        	dialog.setMessage(getResources().getString(R.string.warning_networkConnectionError));
+        	dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+        	}).create().show();;
+        }
+		return false;
+	}
 
 }

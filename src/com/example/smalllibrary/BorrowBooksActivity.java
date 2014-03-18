@@ -123,7 +123,11 @@ public class BorrowBooksActivity extends Activity {
 			}
 			
 			String[] params = new String[]{url, jsonArray.toString()};
-			new PostBorrowingRecord().execute(params);
+			
+			if(checkNetworkState())
+			{
+				new PostBorrowingRecord().execute(params);
+			}
 		}
 		else
 		{
@@ -149,7 +153,11 @@ public class BorrowBooksActivity extends Activity {
 					scanCode = data.getStringExtra("SCAN_RESULT");
 					// 2. Request to server to check the book is valid to borrow
 					String url = Generic.serverurl+"Book/GetBook/"+scanCode;
-					new GetBookOperation().execute(url);
+					
+					if(checkNetworkState())
+					{
+						new GetBookOperation().execute(url);
+					}
                 } 
 				else if(resultCode == RESULT_CANCELED) 
 				{
@@ -396,4 +404,26 @@ public class BorrowBooksActivity extends Activity {
        // startActivity(new Intent(BorrowBooksActivity.this,BorrowBooksLoginActivity.class)); 
         return true;
     }
+	
+	private boolean checkNetworkState()
+	{
+		if(Generic.isOnline(this))
+		{
+			return true;
+		}
+		else
+        {
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        	dialog.setTitle("Warning");
+        	dialog.setMessage(getResources().getString(R.string.warning_networkConnectionError));
+        	dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+        	}).create().show();;
+        }
+		return false;
+	}
 }

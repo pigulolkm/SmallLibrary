@@ -14,7 +14,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,7 +69,11 @@ public class UpdateRuleActivity extends Activity {
 			jsonObj.put("Rule_outDateFine", editTextOutDateFine.getText().toString());
 			
 			String[] params = new String[]{ url, jsonObj.toString() };
-			new updateRules().execute(params);
+			
+			if(checkNetworkState())
+			{
+				new updateRules().execute(params);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,7 +97,11 @@ public class UpdateRuleActivity extends Activity {
 	private void getRulesFromDb()
 	{
 		String url = Generic.serverurl + "Rules/GetRules/1";
-		new getRules().execute(url);
+		
+		if(checkNetworkState())
+		{
+			new getRules().execute(url);
+		}
 	}
 	
 	private class getRules extends AsyncTask<String, Void, String>{
@@ -219,5 +229,26 @@ public class UpdateRuleActivity extends Activity {
 		}
         return true;
     }
+	
+	private boolean checkNetworkState()
+	{
+		if(Generic.isOnline(this))
+		{
+			return true;
+		}
+		else
+        {
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        	dialog.setTitle("Warning");
+        	dialog.setMessage(getResources().getString(R.string.warning_networkConnectionError));
+        	dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
 
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+        	}).create().show();;
+        }
+		return false;
+	}
 }
