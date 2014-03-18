@@ -136,6 +136,16 @@ public class ShowBorrowBooksResultActivity extends Activity {
 			
 		}
 	}
+	
+	@Override
+    public void onBackPressed()
+    {
+		Generic.LID = "";
+		Intent intent = new Intent();
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		intent.setClass(ShowBorrowBooksResultActivity.this,BorrowBooksLoginActivity.class);
+		startActivity(intent);
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,8 +158,7 @@ public class ShowBorrowBooksResultActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {       
 		if(menuItem.getItemId() == android.R.id.home)
-			Generic.LID = "";
-			startActivity(new Intent(ShowBorrowBooksResultActivity.this,BorrowBooksLoginActivity.class)); 
+			onBackPressed();
         return true;
     }
 

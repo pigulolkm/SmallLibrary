@@ -273,25 +273,35 @@ private class validateCard extends AsyncTask<String, Void, String>{
 						
 						Dialog.setTitle("Login Success");
 						Dialog.setMessage("Please wait...");
+						Dialog.dismiss();
 						
-						// Intent after 3 seconds
-						Timer timer = new Timer();
-						timer.schedule(new TimerTask(){
+						AlertDialog.Builder builder = new AlertDialog.Builder(BorrowBooksLoginActivity.this);
+						builder.setTitle("Username :");
+						builder.setMessage(jsonObj.getString("name"));
+						builder.setPositiveButton("Continue", new DialogInterface.OnClickListener(){
 							@Override
-							public void run() {
-								Dialog.dismiss();
+							public void onClick(DialogInterface dialog,	int which) {
 								Intent i = new Intent();
 								i.setClass(BorrowBooksLoginActivity.this, BorrowBooksActivity.class);
 								i.putExtra("borrowedAmount", BorrowedAmount);
 								startActivity(i);
-							}}, 3000);
+							}
+						});
+						builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								Generic.LID = "";
+								BorrowBooksLoginActivity.this.recreate();
+							}
+						});
+						builder.create().show();
 					}
 					else
 					{
 						Dialog.dismiss();
 						
 						AlertDialog.Builder builder = new AlertDialog.Builder(BorrowBooksLoginActivity.this);
-						builder.setMessage("Invalid code!");
+						builder.setTitle("Invalid code!");
 						builder.setNeutralButton("OK", new DialogInterface.OnClickListener(){
 							@Override
 							public void onClick(DialogInterface dialog,	int which) {
@@ -318,8 +328,7 @@ private class validateCard extends AsyncTask<String, Void, String>{
 
 		editTextUnlockPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 		
-		builder.setTitle("Please insert password to unclock");
-		builder.setIcon( android.R.drawable.ic_dialog_info);
+		builder.setTitle("Please insert password to unlock");
 		builder.setView(editTextUnlockPassword);
 		builder.setPositiveButton("Enter", new DialogInterface.OnClickListener(){
 			@Override
