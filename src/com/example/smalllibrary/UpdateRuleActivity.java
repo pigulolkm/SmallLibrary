@@ -9,6 +9,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ActionBar;
@@ -210,7 +211,12 @@ public class UpdateRuleActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {       
 		if(menuItem.getItemId() == android.R.id.home)
-			startActivity(new Intent(UpdateRuleActivity.this,MainActivity.class)); 
+		{
+			Intent intent = new Intent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.setClass(UpdateRuleActivity.this,MainActivity.class);
+	        startActivity(intent); 
+		}
         return true;
     }
 

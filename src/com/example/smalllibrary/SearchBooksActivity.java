@@ -193,8 +193,11 @@ public class SearchBooksActivity extends Activity {
 	
 	@Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
-    {       
-        startActivity(new Intent(SearchBooksActivity.this,MainActivity.class)); 
+    {   
+		Intent intent = new Intent();
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		intent.setClass(SearchBooksActivity.this,MainActivity.class);
+        startActivity(intent); 
         return true;
     }
 

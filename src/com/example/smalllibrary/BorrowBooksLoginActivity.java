@@ -336,7 +336,10 @@ private class validateCard extends AsyncTask<String, Void, String>{
 				if(editTextUnlockPassword.getText().toString().equals(Generic.unlockPassword))
 				{
 					dialog.dismiss();
-					BorrowBooksLoginActivity.this.finish();
+					Intent intent = new Intent();
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+					intent.setClass(BorrowBooksLoginActivity.this, MainActivity.class);
+					startActivity(intent);
 				}
 				else
 				{

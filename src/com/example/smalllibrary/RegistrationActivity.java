@@ -211,7 +211,12 @@ public class RegistrationActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {       
 		if(menuItem.getItemId() == android.R.id.home)
-			startActivity(new Intent(RegistrationActivity.this,MainActivity.class)); 
+		{
+			Intent intent = new Intent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.setClass(RegistrationActivity.this,MainActivity.class);
+	        startActivity(intent); 
+		}
         return true;
     }
 

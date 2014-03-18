@@ -278,7 +278,10 @@ public class ReturnBooksActivity extends Activity {
 	        	}
 	            return true;
 	        case android.R.id.home:
-	        	startActivity(new Intent(ReturnBooksActivity.this,MainActivity.class)); 
+	        	Intent intent = new Intent();
+	    		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+	    		intent.setClass(ReturnBooksActivity.this,MainActivity.class);
+	            startActivity(intent); 
 	        	return true;
 	    }
 
