@@ -18,6 +18,7 @@
         <item>Registry Borrowers</item>
         <item>Borrow Books</item>
         <item>Return Books</item>
+        <item>Manage Books</item>
         <item>Update Rules</item>
     </string-array>
 
@@ -29,5 +30,9 @@
     <string name="ReturnBookAmount">Return Book Amount : </string>
     <string name="title_activity_update_rule">Update Rules</string>
     <string name="warning_networkConnectionError">Oops! There was a problem connecting to the Internet. Please try again later.</string>
+    <string name="title_activity_manage_books">ManageBooksActivity</string>
+    <string name="title_activity_create_book_fragment">Create Book</string>
+    <string name="title_activity_update_book_fragment">Update Book</string>
+    <string name="title_activity_manage_book_pager_adapter">ManageBookPagerAdapter</string>
 
 </resources>

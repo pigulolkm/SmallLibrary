@@ -149,6 +149,12 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	public void ManageBooks() {
+		Intent intent = new Intent();
+		intent.setClass(MainActivity.this, ManageBooksActivity.class);
+		startActivity(intent);
+	}
+	
 	public void UpdateRules() {
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, UpdateRuleActivity.class);
@@ -205,9 +211,14 @@ public class MainActivity extends Activity {
 	    case 5: // Return Books
 	    	ReturnBooks();
 	    	break;
-	    case 6: // Update Rules
+	    	
+	    case 6: // Manage Books
+	    	ManageBooks();
+	    	break;
+	    	
+	    case 7: // Update Rules
 	    	UpdateRules();
-
+	    	break;
 	    default:
 	    	
 	        return;
