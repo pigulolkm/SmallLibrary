@@ -1,9 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background2"
-    tools:context=".RegistrationActivity" >
+    tools:context=".UpdateRuleActivity" >
 	
     <RelativeLayout 
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
 	    android:background="#80ffffff"
 	    android:layout_margin="10dp" >
 	    <LinearLayout
-	        android:id="@+id/layout1"
+	        android:id="@+id/linearLayout1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentTop="true"
@@ -35,7 +35,7 @@
 	            android:id="@+id/textViewRenewalLimit"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_marginTop="30dp"
+	            android:layout_marginTop="35dp"
 	            android:text="Renewal Limit : "
 	            android:textStyle="bold"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -44,7 +44,7 @@
 	            android:id="@+id/textViewBorrowingPeriod"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_marginTop="30dp"
+	            android:layout_marginTop="35dp"
 	            android:text="Borrowing Period (Day): "
 	            android:textStyle="bold"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -53,7 +53,7 @@
 	            android:id="@+id/textViewReservationLimit"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_marginTop="30dp"
+	            android:layout_marginTop="35dp"
 	            android:text="Reservation Limit : "
 	            android:textStyle="bold"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -62,71 +62,147 @@
 	            android:id="@+id/textViewOutDateFine"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_marginTop="30dp"
+	            android:layout_marginTop="35dp"
 	            android:text="Out Date Fine ($): "
+	            android:textStyle="bold"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	        
+	        <TextView
+	            android:id="@+id/textViewLimitRenewBookDay"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="35dp"
+	            android:text="Renew Period After (Day): "
 	            android:textStyle="bold"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
 	    </LinearLayout>
 	
 	    <LinearLayout
-	        android:id="@+id/linearLayout1"
+	        android:id="@+id/linearLayout2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentRight="true"
 	        android:orientation="vertical" >
-	
-	        <EditText
-	            android:id="@+id/editTextBorrowingLimit"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:inputType="number"
-	            android:ems="5"
-	            android:maxLength="5" />
-	
-	        <EditText
-	            android:id="@+id/editTextRenewalLimit"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="15dp"
-	            android:ems="5"
-	            android:inputType="number"
-	            android:maxLength="5" />
-	
-	        <EditText
-	            android:id="@+id/editTextBorrowingPeriod"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="15dp"
-	            android:ems="5"
-	            android:inputType="number"
-	            android:maxLength="5" />
-	
-	        <EditText
-	            android:id="@+id/editTextReservationLimit"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="15dp"
-	            android:ems="5"
-	            android:inputType="number"
-	            android:maxLength="5" />
-	
-	        <EditText
-	            android:id="@+id/editTextOutDateFine"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="15dp"
-	            android:ems="5"
-	            android:inputType="numberDecimal"
-	            android:maxLength="5" />
+			<RelativeLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:background="#66ffffff">
+		        <EditText
+		            android:id="@+id/editTextBorrowingLimit"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:inputType="number"
+		            android:ems="5"
+		            android:maxLength="5" />
+	        </RelativeLayout>
+			<RelativeLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:background="#66ffffff"
+		        android:layout_marginTop="5dp">
+		        <EditText
+		            android:id="@+id/editTextRenewalLimit"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="15dp"
+		            android:ems="5"
+		            android:inputType="number"
+		            android:maxLength="5" />
+	        </RelativeLayout>
+			<RelativeLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:background="#66ffffff"
+		        android:layout_marginTop="5dp">
+		        <EditText
+		            android:id="@+id/editTextBorrowingPeriod"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="15dp"
+		            android:ems="5"
+		            android:inputType="number"
+		            android:maxLength="5" />
+	        </RelativeLayout>
+			<RelativeLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:background="#66ffffff"
+		        android:layout_marginTop="5dp">
+		        <EditText
+		            android:id="@+id/editTextReservationLimit"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="15dp"
+		            android:ems="5"
+		            android:inputType="number"
+		            android:maxLength="5" />
+	        </RelativeLayout>
+			<RelativeLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:background="#66ffffff"
+		        android:layout_marginTop="5dp">
+		        <EditText
+		            android:id="@+id/editTextOutDateFine"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="15dp"
+		            android:ems="5"
+		            android:inputType="numberDecimal"
+		            android:maxLength="5" />
+	        </RelativeLayout>
+	        <RelativeLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:background="#66ffffff"
+		        android:layout_marginTop="5dp">
+		        <EditText
+		            android:id="@+id/editTextLimitRenewBookDay"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="15dp"
+		            android:ems="5"
+		            android:inputType="number"
+		            android:maxLength="5" />
+	        </RelativeLayout>
 	    </LinearLayout>
-	
+		<LinearLayout 
+		    android:id="@+id/linearLayout3"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/linearLayout1"
+	        android:layout_below="@+id/linearLayout1"
+	        android:orientation="vertical">
+		    <TextView
+	            android:id="@+id/textViewUnlockPassword"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="30dp"
+	            android:text="UnlockPassword (Max. Length 20): "
+	            android:textStyle="bold"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+		    
+		    <RelativeLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:background="#66ffffff">
+			    <EditText
+		            android:id="@+id/editTextUnlockPassword"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="15dp"
+		            android:ems="20"
+		            android:inputType="text"
+		            android:maxLength="20" />
+		    </RelativeLayout>
+		</LinearLayout>
 	    <Button
 	        android:id="@+id/buttonUpdateRule"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignRight="@+id/linearLayout1"
-	        android:layout_below="@+id/linearLayout1"
-	        android:layout_marginTop="35dp"
+	        android:layout_alignRight="@+id/linearLayout3"
+	        android:layout_below="@+id/linearLayout3"
+	        android:layout_marginTop="10dp"
 	        android:onClick="updateRule"
 	        android:textStyle="bold"
 	        android:text="Update" />
@@ -142,4 +218,4 @@
 	        android:textStyle="bold"
 	        android:text="Reset" />
 	</RelativeLayout>
-</RelativeLayout>
+</ScrollView>

@@ -31,7 +31,9 @@ public class UpdateRuleActivity extends Activity {
 	private EditText editTextBorrowingPeriod;
 	private EditText editTextReservationLimit;
 	private EditText editTextOutDateFine;
-	private String oriBorrowingLimit, oriRenewalLimit, oriBorrowingPeriod, oriReservationLimit, oriOutDateFine;
+	private EditText editTextLimitRenewBookDay;
+	private EditText editTextUnlockPassword;
+	private String oriBorrowingLimit, oriRenewalLimit, oriBorrowingPeriod, oriReservationLimit, oriOutDateFine, oriLimitRenewBookDay, oriUnlockPassword;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class UpdateRuleActivity extends Activity {
 		editTextBorrowingPeriod = (EditText)findViewById(R.id.editTextBorrowingPeriod);
 		editTextReservationLimit = (EditText)findViewById(R.id.editTextReservationLimit);
 		editTextOutDateFine = (EditText)findViewById(R.id.editTextOutDateFine);
+		editTextLimitRenewBookDay = (EditText)findViewById(R.id.editTextLimitRenewBookDay);
+		editTextUnlockPassword = (EditText)findViewById(R.id.editTextUnlockPassword);
 	}
 	
 	public void updateRule(View v)
@@ -67,6 +71,8 @@ public class UpdateRuleActivity extends Activity {
 			jsonObj.put("Rule_borrowingPeriod", editTextBorrowingPeriod.getText().toString());
 			jsonObj.put("Rule_reservationLimit", editTextReservationLimit.getText().toString());
 			jsonObj.put("Rule_outDateFine", editTextOutDateFine.getText().toString());
+			jsonObj.put("Rule_limitRenewBookDay", editTextLimitRenewBookDay.getText().toString());
+			jsonObj.put("Rule_unlockPassword", editTextUnlockPassword.getText().toString());
 			
 			String[] params = new String[]{ url, jsonObj.toString() };
 			
@@ -92,6 +98,8 @@ public class UpdateRuleActivity extends Activity {
 		editTextBorrowingPeriod.setText(oriBorrowingPeriod);
 		editTextReservationLimit.setText(oriReservationLimit);
 		editTextOutDateFine.setText(oriOutDateFine);
+		editTextLimitRenewBookDay.setText(oriLimitRenewBookDay);
+		editTextUnlockPassword.setText(oriUnlockPassword);
 	}
 	
 	private void getRulesFromDb()
@@ -152,6 +160,8 @@ public class UpdateRuleActivity extends Activity {
 				oriBorrowingPeriod = jsonObj.getString("Rule_borrowingPeriod");
 				oriReservationLimit = jsonObj.getString("Rule_reservationLimit");
 				oriOutDateFine = jsonObj.getString("Rule_outDateFine");
+				oriLimitRenewBookDay = jsonObj.getString("Rule_limitRenewBookDay");
+				oriUnlockPassword = jsonObj.getString("Rule_unlockPassword");
 				
 				setText();
 			} catch (JSONException e) {
