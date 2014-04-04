@@ -90,11 +90,6 @@ public class ReturnBooksActivity extends Activity {
 			startActivityForResult(intent, Generic.scan_REQUEST);
 		}
 	}
-	// TODO Finish ReturnBookButton
-	public void Finsh(View v)
-	{
-		// Show the total fine 
-	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
