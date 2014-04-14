@@ -1,0 +1,35 @@
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background2"
+    tools:context=".PostAnnouncementActivity" >
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    android:layout_margin="10dp"
+	    android:background="#80ffffff"
+	    android:weightSum="10" >
+	
+	    <EditText 
+	        android:id="@+id/EditTextAnnouncement"
+	        android:layout_width="match_parent"
+	        android:layout_height="0dip"
+	        android:layout_weight="10"
+	        android:ems="10"
+	        android:inputType="textMultiLine">
+	    	<requestFocus />
+	    </EditText>
+	
+	    <Button
+	        android:id="@+id/ButtonPostAnnouncement"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:onClick="PostAnnouncement"
+	        android:text="Post" />
+	
+	</LinearLayout>
+</RelativeLayout>

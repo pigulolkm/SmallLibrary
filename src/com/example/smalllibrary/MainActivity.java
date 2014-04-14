@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -235,10 +236,20 @@ public class MainActivity extends Activity {
     }
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    //Home icon is selected
-	    if (drawerToggle.onOptionsItemSelected(item)) {
-	        return true;
-	    }
+		switch(item.getItemId())
+		{
+			case R.id.action_new_announcement:
+				Intent intent = new Intent(this, PostAnnouncementActivity.class);
+				startActivity(intent);
+				return true;
+				
+			case android.R.id.home:
+		    //Home icon is selected
+		    if (drawerToggle.onOptionsItemSelected(item)) {
+		        return true;
+		    }
+		}
+		
 	    return super.onOptionsItemSelected(item);
 	}
 	

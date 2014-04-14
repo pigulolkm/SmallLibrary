@@ -34,5 +34,6 @@
     <string name="title_activity_create_book_fragment">Create Book</string>
     <string name="title_activity_update_book_fragment">Update Book</string>
     <string name="title_activity_manage_book_pager_adapter">ManageBookPagerAdapter</string>
+    <string name="title_activity_post_announcement">Post Announcement</string>
 
 </resources>

@@ -118,7 +118,7 @@ public class RegistrationActivity extends Activity {
 		// TODO Error Checking
 			
 		JSONObject jsonObj = new JSONObject();
-		;
+		
 		try {
 			jsonObj.put("L_firstName", etFirstName.getText());
 			jsonObj.put("L_lastName", etLastName.getText());
