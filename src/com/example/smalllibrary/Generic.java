@@ -15,6 +15,8 @@ public class Generic {
 	public static int borrowingLimit = 0;
 	public static String unlockPassword = "123456"; // TODO add <Rule_unclockPassword> in Rule Table & get it when admin login success
 	
+	public static String announcementJson = "";
+	
 	public static String computeHash(String input) {
 		StringBuffer sb = new StringBuffer();
 		try

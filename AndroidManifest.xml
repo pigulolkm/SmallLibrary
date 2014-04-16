@@ -85,6 +85,10 @@
             android:label="@string/title_activity_post_announcement"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.example.smalllibrary.ShowAnnouncementActivity"
+            android:label="@string/title_activity_show_announcement" >
+        </activity>
     </application>
 
 </manifest>

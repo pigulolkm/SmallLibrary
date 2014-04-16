@@ -6,6 +6,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,14 +63,14 @@ public class PostAnnouncementActivity extends Activity {
 			JSONObject json = new JSONObject();
 			try 
 			{
-				json.put( "msg" , EditTextAnnouncement.getText().toString());
+				json.put( "msg" , "New Announcement : " + EditTextAnnouncement.getText().toString());
 			} 
 			catch (JSONException e1) 
 			{
 				e1.printStackTrace();
 			}
 			
-			String[] params = new String[]{ "GCM/PostAnnouncement", json.toString()};
+			String[] params = new String[]{ "Announcement/PostAnnouncement", json.toString()};
 			
 			new AsyncTask<String, Void, String>()
 			{
@@ -81,14 +82,21 @@ public class PostAnnouncementActivity extends Activity {
 						Log.d("PostAnnouncementActivity", "Request url : "+ Generic.serverurl + params[0]);
 						Log.d("PostAnnouncementActivity", "Sending announcement to server :" + params[1]);
 						HttpPost httpPost = new HttpPost(Generic.serverurl + params[0]);
-						StringEntity se= new StringEntity(params[1]);
+						StringEntity se= new StringEntity(params[1], HTTP.UTF_8);
 						httpPost.setEntity(se);
 						httpPost.setHeader("Content-Encoding", "UTF-8");
 						httpPost.setHeader("Content-Type", "application/json");
 						HttpResponse httpResponse = client.execute(httpPost);
 						
-						result = httpResponse.getStatusLine().toString();
-						result += " "+ EntityUtils.toString(httpResponse.getEntity());					
+						if(httpResponse.getStatusLine().getStatusCode() == 200)
+						{
+							result = "success";
+						}
+						else
+						{
+							result = "fail";
+						}
+						Log.d("PostAnnouncement", EntityUtils.toString(httpResponse.getEntity()));					
 					}
 					catch(Exception e)
 					{
@@ -99,8 +107,18 @@ public class PostAnnouncementActivity extends Activity {
 				@Override
 			    protected void onPostExecute(String result) 
 			    {
+					if(result.equals("success"))
+					{
+						AlertDialog.Builder builder = new AlertDialog.Builder(PostAnnouncementActivity.this).setTitle("Success").setMessage("An announcement has been sent");
+						builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								redirectToMain();
+							}
+						}).create().show();
+					}
 					Dialog.dismiss();
-					Log.d("PostAnnouncement", result+"");
+					
 			    }
 			}.execute(params);
 		}
@@ -118,10 +136,7 @@ public class PostAnnouncementActivity extends Activity {
     {       
 		if(menuItem.getItemId() == android.R.id.home)
 		{
-			Intent intent = new Intent();
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-			intent.setClass(PostAnnouncementActivity.this,MainActivity.class);
-	        startActivity(intent); 
+			redirectToMain();
 		}
         return true;
     }
@@ -146,5 +161,13 @@ public class PostAnnouncementActivity extends Activity {
         	}).create().show();;
         }
 		return false;
+	}
+	
+	public void redirectToMain()
+	{
+		Intent intent = new Intent();
+		intent.setClass(PostAnnouncementActivity.this,MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		startActivity(intent);
 	}
 }

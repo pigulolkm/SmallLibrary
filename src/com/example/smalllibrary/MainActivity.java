@@ -1,11 +1,25 @@
 package com.example.smalllibrary;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.example.smalllibrary.CameraTestActivity;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,7 +33,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class MainActivity extends Activity {
 
@@ -30,6 +46,7 @@ public class MainActivity extends Activity {
     private ActionBarDrawerToggle drawerToggle;
     private CharSequence mDrawerTitle = "Home";
 	
+    private ListView ListViewAnnouncementResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +80,125 @@ public class MainActivity extends Activity {
         getActionBar().setTitle(getTitle());
         findViews();
         
-        
+        if(Generic.announcementJson == "")
+		{
+			if(Generic.isOnline(this))
+			{
+				new downloadLastFiveAnnouncement().execute();
+			}
+		}
+		else
+		{
+			showAnnouncement(Generic.announcementJson);
+		}
 	}
     
-    private void findViews(){
+    private void findViews()
+    {
+    	ListViewAnnouncementResult = (ListView)findViewById(R.id.ListViewAnnouncementResult);
+		ListViewAnnouncementResult.setOnItemClickListener(new announcementOnItemClick());
+	}
+    
+    private class downloadLastFiveAnnouncement extends AsyncTask<Void, Void, String>
+	{
+		private final HttpClient  client = new DefaultHttpClient();
+		private ProgressDialog Dialog = new ProgressDialog(MainActivity.this);
 		
+		@Override
+		protected void onPreExecute() {
+			Dialog.setCancelable(true);
+			Dialog.setCanceledOnTouchOutside(false);
+			Dialog.setTitle("Loading");
+			Dialog.setMessage("Please wait...");
+			Dialog.show();
+		}
+		
+		@Override
+		protected String doInBackground(Void...params) {
+			
+			String result = null;
+			try
+			{
+				HttpGet httpGet = new HttpGet(Generic.serverurl + "Announcement/GetLastFiveAnnouncements");
+				HttpResponse httpResponse = client.execute(httpGet);
+				if(httpResponse.getStatusLine().getStatusCode() == 200)
+				{
+					result = EntityUtils.toString(httpResponse.getEntity());
+					
+				}
+				else
+				{
+					result = httpResponse.getStatusLine().toString();
+				}
+				
+			}
+			catch(Exception e)
+			{
+				
+			}
+			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(String result)
+		{
+			Dialog.dismiss();
+			Generic.announcementJson = result;
+			showAnnouncement(Generic.announcementJson);
+			Log.d("MainActivity", result);
+		}
 	}
-    
+	
+	private void showAnnouncement(String json)
+	{
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		HashMap<String,Object> item;
+		
+		try {
+			JSONArray jsonArray = new JSONArray(json);
+
+			if(jsonArray.length() != 0)
+			{			
+				JSONObject jsonObj;
+				
+				for(int i = 0; i < jsonArray.length(); i++)
+				{
+					jsonObj = jsonArray.getJSONObject(i);
+					item = new HashMap<String,Object>();
+					
+					String[] msg = jsonObj.getString("A_content").split(":");
+					String datetime = jsonObj.getString("A_datetime").replace("T", " ");
+					String[] temp = datetime.split(":");
+					String YYYYmmddHHMM = temp[0] + ":" + temp[1];
+					
+					item.put("msg", msg[1]);
+					item.put("datetime", YYYYmmddHHMM);
+					list.add(item);
+				}
+				
+				SimpleAdapter adapter = new SimpleAdapter(MainActivity.this, list, R.layout.listview_announcement_item, 
+						new String[]{"msg","datetime"},
+						new int[]{R.id.textViewAnnouncementContent, R.id.textViewAnnouncementDatetime});
+				
+				ListViewAnnouncementResult.setAdapter(adapter);
+			}
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	public class announcementOnItemClick implements OnItemClickListener
+	{
+		@Override
+		public void onItemClick(AdapterView<?> parent, View v, int pos, long arg3) 
+		{
+			Intent intent = new Intent();
+			intent.setClass(MainActivity.this, ShowAnnouncementActivity.class);
+			intent.putExtra("Pos", pos);
+			startActivity(intent);
+		}
+	}
     
     private void initActionBar(){
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -244,10 +373,10 @@ public class MainActivity extends Activity {
 				return true;
 				
 			case android.R.id.home:
-		    //Home icon is selected
-		    if (drawerToggle.onOptionsItemSelected(item)) {
-		        return true;
-		    }
+			    //Home icon is selected
+			    if (drawerToggle.onOptionsItemSelected(item)) {
+			        return true;
+			    }
 		}
 		
 	    return super.onOptionsItemSelected(item);
