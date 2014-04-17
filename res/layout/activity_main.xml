@@ -18,27 +18,6 @@
 		    android:orientation="vertical"
 		    android:background="#80ffffff"
 		    android:layout_margin="10dp" >
-			
-            <LinearLayout 
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:background="#80ffffff"
-			    android:orientation="vertical" >
-	            <TextView 
-		            android:id="@+id/TextViewLastLoginTime"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:paddingLeft="10dp"
-		            android:textAppearance="?android:attr/textAppearanceSmall" />
-	            
-	            <TextView 
-		            android:id="@+id/TextViewWelcome"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-					android:paddingLeft="10dp"
-		            android:textAppearance="?android:attr/textAppearanceSmall" />
-	            
-	        </LinearLayout>
 	        
 	        <RelativeLayout 
 	            android:layout_width="match_parent"
