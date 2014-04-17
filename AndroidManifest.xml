@@ -87,7 +87,13 @@
         </activity>
         <activity
             android:name="com.example.smalllibrary.ShowAnnouncementActivity"
-            android:label="@string/title_activity_show_announcement" >
+            android:label="@string/title_activity_show_announcement"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.smalllibrary.ShowAllAnnouncementActivity"
+            android:label="@string/title_activity_show_all_announcement"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

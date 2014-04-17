@@ -36,5 +36,6 @@
     <string name="title_activity_manage_book_pager_adapter">ManageBookPagerAdapter</string>
     <string name="title_activity_post_announcement">Post Announcement</string>
     <string name="title_activity_show_announcement">Show Announcement</string>
+    <string name="title_activity_show_all_announcement">Show All Announcement</string>
 
 </resources>
