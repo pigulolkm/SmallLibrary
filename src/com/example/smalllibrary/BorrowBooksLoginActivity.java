@@ -6,6 +6,8 @@ import java.util.TimerTask;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -42,8 +44,6 @@ public class BorrowBooksLoginActivity extends Activity {
 		
 		ActionBar actionBar = this.getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		
-		// TODO add email & password validation instead of checking by QR token
 	}
 	
 	////////////////////////////////////
@@ -70,6 +70,17 @@ public class BorrowBooksLoginActivity extends Activity {
 			intent.setClass(BorrowBooksLoginActivity.this, CameraTestActivity.class);
 			startActivityForResult(intent, Generic.scan_REQUEST_Card);
 		}
+	}
+	
+	
+	///////////////////////////////
+	// ButtonLoginByUserPw Click //
+	///////////////////////////////
+	public void LoginByUserPw(View v)
+	{
+		Intent intent = new Intent();
+		intent.setClass(BorrowBooksLoginActivity.this, LoginActivity.class);
+		startActivityForResult(intent, Generic.by_User_Pw);
 	}
 	
 	@Override
@@ -123,6 +134,18 @@ public class BorrowBooksLoginActivity extends Activity {
 				{
 					Toast.makeText(this, "Invalid code", Toast.LENGTH_LONG).show();
 				}
+				break;
+			case Generic.by_User_Pw:
+				if(resultCode == RESULT_OK)
+				{
+					String url = Generic.serverurl + "LibraryUser/SignInLibraryUser";
+					String json = data.getStringExtra("UserPwJson");
+					String[] params = new String[]{ url, json };
+					if(checkNetworkState())
+					{
+						new loginOperation().execute(params);
+					}
+				}
 		}
 	}
 	
@@ -168,7 +191,6 @@ public class BorrowBooksLoginActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result)
 		{
-			
 			try 
 			{
 				JSONArray jsonArray = new JSONArray(result);
@@ -222,7 +244,7 @@ public class BorrowBooksLoginActivity extends Activity {
 		}
 	}
 	
-private class validateCard extends AsyncTask<String, Void, String>{
+	private class validateCard extends AsyncTask<String, Void, String>{
 		
 		private final HttpClient  client = new DefaultHttpClient();
 		private ProgressDialog Dialog = new ProgressDialog(BorrowBooksLoginActivity.this);
@@ -325,6 +347,97 @@ private class validateCard extends AsyncTask<String, Void, String>{
 				
 			}
 			
+		}
+	}
+	
+	private class loginOperation extends AsyncTask<String, Void, String>{
+		
+		private final HttpClient  client = new DefaultHttpClient();
+		private ProgressDialog Dialog = new ProgressDialog(BorrowBooksLoginActivity.this);
+		
+		@Override
+		protected void onPreExecute() {
+			Dialog.setCancelable(true);
+			Dialog.setTitle("Loading");
+			Dialog.setMessage("Please wait...");
+			Dialog.show();
+		}
+		
+		@Override
+		protected String doInBackground(String... params) {
+			
+			String result = null;
+			try
+			{
+				HttpPut httpPut = new HttpPut(params[0]);
+				// Convert JSONObject to JSON to String
+				String json = params[1];
+				// Set json to StringEntity
+				StringEntity se= new StringEntity(json);
+				// Set httpPost Entity
+				httpPut.setEntity(se);
+				// Set some headers to inform server about the type of the content
+				httpPut.setHeader("Content-Encoding", "UTF-8");
+				httpPut.setHeader("Content-Type", "application/json");
+				HttpResponse httpResponse = client.execute(httpPut);
+				if(httpResponse.getStatusLine().getStatusCode() == 200)
+				{
+					result = EntityUtils.toString(httpResponse.getEntity());
+					
+				}
+				else
+				{
+					result = httpResponse.getStatusLine().toString();
+				}
+				
+			}
+			catch(Exception e)
+			{
+				
+			}
+			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(String result)
+		{
+			try {
+				JSONArray jsonArray = new JSONArray(result);
+				
+				if(jsonArray.length() != 0)
+				{			
+					JSONObject jsonObj = jsonArray.getJSONObject(0);
+					// True means account exist and password correct. Token is generated.
+					if(jsonObj.getString("result").equals("True"))
+					{
+						BorrowedAmount = Integer.parseInt(jsonObj.getString("borrowedAmount"));
+						Generic.borrowingLimit = Integer.parseInt(jsonObj.getString("borrowingLimit"));
+						Generic.LID = jsonObj.getString("LID");
+						
+						Dialog.setTitle("Login Success");
+						Dialog.setMessage("Please wait...");
+						
+						// Intent after 3 seconds
+						Timer timer = new Timer();
+						timer.schedule(new TimerTask(){
+							@Override
+							public void run() {
+								Dialog.dismiss();
+								Intent i = new Intent();
+								i.setClass(BorrowBooksLoginActivity.this, BorrowBooksActivity.class);
+								i.putExtra("borrowedAmount", BorrowedAmount);
+								startActivity(i);
+							}}, 3000);
+					}
+					else
+					{
+						Toast.makeText(BorrowBooksLoginActivity.this, "Invalid email/ password", Toast.LENGTH_LONG).show();
+					}
+				}
+			}catch(JSONException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	

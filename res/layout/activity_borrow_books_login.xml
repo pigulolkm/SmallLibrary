@@ -13,27 +13,38 @@
 	    android:paddingTop="@dimen/activity_vertical_margin"
 	    android:layout_margin="10dp"
 	    android:background="#80ffffff" >
+	    
+	    <Button
+	        android:id="@+id/ButtonScanBorrowingCard"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:layout_above="@+id/ButtonScanBorrowingToken"
+	        android:onClick="ScanBorrowingCard"
+	        android:textStyle="bold"
+	        android:text="Scan Card" />
+	    
 	    <Button
 	        android:id="@+id/ButtonScanBorrowingToken"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignParentBottom="true"
+	        android:layout_centerVertical="true"
 	        android:layout_centerHorizontal="true"
-	        android:layout_marginBottom="80dp"
+	        android:layout_marginTop="50dp"
+	        android:layout_marginBottom="50dp"
 	        android:onClick="ScanBorrowingToken"
 	        android:textStyle="bold"
 	        android:text="Scan Token" />
 
 	    <Button
-	        android:id="@+id/ButtonScanBorrowingCard"
+	        android:id="@+id/ButtonLoginByUserPw"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignParentTop="true"
 	        android:layout_centerHorizontal="true"
-	        android:layout_marginTop="50dp"
-	        android:onClick="ScanBorrowingCard"
+	        android:layout_below="@+id/ButtonScanBorrowingToken"
+	        android:onClick="LoginByUserPw"
 	        android:textStyle="bold"
-	        android:text="Scan Card" />
-
+	        android:text="By Username Password" />
+	    
 	</RelativeLayout>
 </RelativeLayout>

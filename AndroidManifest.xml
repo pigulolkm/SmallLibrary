@@ -95,6 +95,11 @@
             android:label="@string/title_activity_show_all_announcement"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.example.smalllibrary.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

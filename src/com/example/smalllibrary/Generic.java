@@ -10,11 +10,14 @@ import android.net.NetworkInfo;
 public class Generic {
 	public static final int scan_REQUEST = 1;
 	public static final int scan_REQUEST_Card = 2;
+	public static final int by_User_Pw = 3;
 	public static String serverurl = "http://piguloming.no-ip.org:90/api/";
 	public static String LID = "";
 	public static int borrowingLimit = 0;
-	public static String unlockPassword = "123456"; // TODO add <Rule_unclockPassword> in Rule Table & get it when admin login success
-	
+	public static String unlockPassword = "123456";
+	public static final String BookStatus_ONTHESHELF = "On the shelf";
+	public static final String BookStatus_BORROWED = "Borrowed";
+	public static final String BookStatus_RESERVED = "Reserved";
 	public static String announcementJson = "";
 	
 	public static String computeHash(String input) {

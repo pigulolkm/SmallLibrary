@@ -10,6 +10,7 @@
     <string name="title_activity_borrow_books_login">Borrow Book</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_show_borrow_books_result">Show Borrow Books Result</string>
+    <string name="Login">Login</string>
 
     <string-array name="drawer_menu">
         <item>Home</item>
@@ -37,5 +38,6 @@
     <string name="title_activity_post_announcement">Post Announcement</string>
     <string name="title_activity_show_announcement">Show Announcement</string>
     <string name="title_activity_show_all_announcement">Show All Announcement</string>
+    <string name="title_activity_login">Login</string>
 
 </resources>

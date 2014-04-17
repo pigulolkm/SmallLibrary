@@ -23,6 +23,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -126,6 +127,8 @@ public class BorrowBooksActivity extends Activity {
 			
 			if(checkNetworkState())
 			{
+				Log.d("BorrowBooksActivity_url", params[0]);
+				Log.d("BorrowBooksActivity_param", params[1]);
 				new PostBorrowingRecord().execute(params);
 			}
 		}
@@ -222,7 +225,7 @@ public class BorrowBooksActivity extends Activity {
 			if(jsonObj.has("B_title") && jsonObj.has("B_author") && jsonObj.has("B_status"))
 			{
 				// Y : Can be borrowed
-				if(jsonObj.getString("B_status").equals("Y"))
+				if(jsonObj.getString("B_status").equals(Generic.BookStatus_ONTHESHELF) || jsonObj.getString("B_status").equals(Generic.BookStatus_RESERVED))
 				{
 					// Check the book exists in the list
 					if(!isBookExistInList(jsonObj))
@@ -248,7 +251,8 @@ public class BorrowBooksActivity extends Activity {
 				else
 				{
 					AlertDialog.Builder dialog = new AlertDialog.Builder(BorrowBooksActivity.this);
-			         dialog.setTitle(jsonObj.getString("B_title")+" cannot be borrowed. The book's status is 'Not allowed'.");
+			         dialog.setTitle(jsonObj.getString("B_title")+" cannot be borrowed.");
+			         dialog.setMessage(" The book's status is : " + jsonObj.getString("B_status"));
 			         dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
