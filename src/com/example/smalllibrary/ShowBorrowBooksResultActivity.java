@@ -7,24 +7,30 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.smalllibrary.Fragment.FailBorrowBookFragment;
+import com.example.smalllibrary.Fragment.SuccessBorrowBookFragment;
+
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ShowBorrowBooksResultActivity extends Activity {
+public class ShowBorrowBooksResultActivity extends FragmentActivity {
 	
 	private ListView listViewBorrowBooksSuccessResult;
 	private ListView listViewBorrowBooksFailResult;
 	private TextView textViewBorrowBooksSuccess;
 	private TextView textViewBorrowBooksFail;
-
+	private FragmentTabHost tabHost;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,16 +43,51 @@ public class ShowBorrowBooksResultActivity extends Activity {
 		String result = intent.getStringExtra("BorrowBooksResult");
 		
 		findViews();
-		ShowBorrowBooksResult(result);
+		initTab(result);
+		//ShowBorrowBooksResult(result);
 	}
 	
 	private void findViews()
 	{
-		listViewBorrowBooksSuccessResult = (ListView)findViewById(R.id.listViewBorrowBooksSuccessResult);
+		/*listViewBorrowBooksSuccessResult = (ListView)findViewById(R.id.listViewBorrowBooksSuccessResult);
 		listViewBorrowBooksFailResult = (ListView)findViewById(R.id.listViewBorrowBooksFailResult);
 		textViewBorrowBooksSuccess = (TextView)findViewById(R.id.textViewBorrowBooksSuccess);
-		textViewBorrowBooksFail = (TextView)findViewById(R.id.textViewBorrowBooksFail);
-		
+		textViewBorrowBooksFail = (TextView)findViewById(R.id.textViewBorrowBooksFail);*/
+		tabHost = (FragmentTabHost)findViewById(R.id.tabhostShowBorrowBooksResult);
+	}
+	
+	public void initTab(String result)
+	{
+		tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+		try 
+		{
+			JSONObject jsonObj = new JSONObject(result);
+			JSONArray jsonArraySuccess = jsonObj.getJSONArray("Success");
+			JSONArray jsonArrayFail = jsonObj.getJSONArray("Fail");
+			int totalBooksBorrow = jsonArraySuccess.length() + jsonArrayFail.length();
+			
+			Bundle success = new Bundle();
+			success.putString("Json", jsonArraySuccess.toString());
+			success.putInt("totalBooksBorrow", totalBooksBorrow);
+			
+			Bundle fail = new Bundle();
+			fail.putString("Json", jsonArrayFail.toString());
+			fail.putInt("totalBooksBorrow", totalBooksBorrow);
+			
+		    tabHost.addTab(tabHost.newTabSpec("Success").setIndicator("Success"), SuccessBorrowBookFragment.class, success);
+		    tabHost.addTab(tabHost.newTabSpec("Fail").setIndicator("Fail"), FailBorrowBookFragment.class, fail);
+		    
+		    tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+				@Override
+				public void onTabChanged(String tabId) {
+					/*Toast.makeText(ShowBorrowBooksResultActivity.this, "Tab Changed", Toast.LENGTH_SHORT).show();*/
+				}
+			});
+		} 
+		catch (JSONException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	private void ShowBorrowBooksResult(String result)
