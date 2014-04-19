@@ -3,13 +3,12 @@ package com.example.smalllibrary;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-
-
-
-
-
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -120,11 +119,22 @@ public class SearchBooksActivity extends Activity {
 			{
 				searchOption = "ScanCode";
 			}
-			String url = Generic.serverurl + "Book/GetBookByKey"+"?searchKey="+searchKey+"&searchOption="+searchOption;
+			String url = Generic.serverurl + "Book/PostGetBookByKey";
+			JSONObject json = new JSONObject();
+			try 
+			{
+				json.put( "searchKey" , searchKey);
+				json.put( "searchOption" , searchOption);
+				
+			} 
+			catch (JSONException e) 
+			{
+				e.printStackTrace();
+			}
 			
 			if(checkNetworkState())
 			{
-				new GetSearchBooksOperation().execute(url);
+				new GetSearchBooksOperation().execute(url, json.toString());
 			}
 		}
 	}
@@ -155,8 +165,14 @@ public class SearchBooksActivity extends Activity {
 			String result = null;
 			try
 			{
-				HttpGet httpGet = new HttpGet(params[0]);
-				HttpResponse httpResponse = client.execute(httpGet);
+				HttpPost httpPost = new HttpPost(params[0]);
+				StringEntity se= new StringEntity(params[1]);
+				// Set httpPost Entity
+				httpPost.setEntity(se);
+				// Set some headers to inform server about the type of the content
+				httpPost.setHeader("Content-Encoding", "UTF-8");
+				httpPost.setHeader("Content-Type", "application/json");
+				HttpResponse httpResponse = client.execute(httpPost);
 				if(httpResponse.getStatusLine().getStatusCode() == 200)
 				{
 					result = EntityUtils.toString(httpResponse.getEntity());
