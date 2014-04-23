@@ -50,9 +50,9 @@ public final class R {
         public static final int EditTextPassword=0x7f0a0009;
         public static final int ListViewAllAnnouncementResult=0x7f0a0032;
         public static final int ListViewAnnouncementResult=0x7f0a000e;
-        public static final int action_new_announcement=0x7f0a0062;
-        public static final int action_renew=0x7f0a0063;
-        public static final int action_settings=0x7f0a0061;
+        public static final int action_new_announcement=0x7f0a0063;
+        public static final int action_renew=0x7f0a0064;
+        public static final int action_settings=0x7f0a0062;
         public static final int btnConfirmBorrowBooks=0x7f0a0003;
         public static final int btnReset=0x7f0a002e;
         public static final int btnReturnBooksScan=0x7f0a0028;
@@ -60,7 +60,7 @@ public final class R {
         public static final int btnSeachBooks=0x7f0a0030;
         public static final int buttonResetRule=0x7f0a0046;
         public static final int buttonUpdateRule=0x7f0a0045;
-        public static final int cameraPreview=0x7f0a0060;
+        public static final int cameraPreview=0x7f0a0061;
         public static final int content_frame=0x7f0a000c;
         public static final int drawer_layout=0x7f0a000b;
         public static final int editTextBirthday=0x7f0a001e;
@@ -101,6 +101,7 @@ public final class R {
         public static final int textViewBookAuthor=0x7f0a004e;
         public static final int textViewBookPublicationDate=0x7f0a0050;
         public static final int textViewBookPublisher=0x7f0a004f;
+        public static final int textViewBookReservationCount=0x7f0a0052;
         public static final int textViewBookStatus=0x7f0a0051;
         public static final int textViewBookTitle=0x7f0a004d;
         public static final int textViewBorrowBooksCount=0x7f0a0001;
@@ -110,10 +111,10 @@ public final class R {
         public static final int textViewBorrowingPeriod=0x7f0a0038;
         public static final int textViewConfirmPassword=0x7f0a0021;
         public static final int textViewEmail=0x7f0a0019;
-        public static final int textViewFailBorrowBookAuthor=0x7f0a0053;
-        public static final int textViewFailBorrowBookPublicationDate=0x7f0a0055;
-        public static final int textViewFailBorrowBookPublisher=0x7f0a0054;
-        public static final int textViewFailBorrowBookTitle=0x7f0a0052;
+        public static final int textViewFailBorrowBookAuthor=0x7f0a0054;
+        public static final int textViewFailBorrowBookPublicationDate=0x7f0a0056;
+        public static final int textViewFailBorrowBookPublisher=0x7f0a0055;
+        public static final int textViewFailBorrowBookTitle=0x7f0a0053;
         public static final int textViewFirstName=0x7f0a0015;
         public static final int textViewIDNO=0x7f0a001b;
         public static final int textViewLastName=0x7f0a0013;
@@ -126,16 +127,16 @@ public final class R {
         public static final int textViewReturnBooksCount=0x7f0a0026;
         public static final int textViewReturnBooksFee=0x7f0a002a;
         public static final int textViewReturnBooksOutDate=0x7f0a0029;
-        public static final int textViewReturnedBookAuthor=0x7f0a005c;
-        public static final int textViewReturnedBookFine=0x7f0a005f;
-        public static final int textViewReturnedBookPublicationDate=0x7f0a005e;
-        public static final int textViewReturnedBookPublisher=0x7f0a005d;
-        public static final int textViewReturnedBookTitle=0x7f0a005b;
-        public static final int textViewSuccessBorrowBookAuthor=0x7f0a0057;
-        public static final int textViewSuccessBorrowBookPublicationDate=0x7f0a0059;
-        public static final int textViewSuccessBorrowBookPublisher=0x7f0a0058;
-        public static final int textViewSuccessBorrowBookShouldReturnedDate=0x7f0a005a;
-        public static final int textViewSuccessBorrowBookTitle=0x7f0a0056;
+        public static final int textViewReturnedBookAuthor=0x7f0a005d;
+        public static final int textViewReturnedBookFine=0x7f0a0060;
+        public static final int textViewReturnedBookPublicationDate=0x7f0a005f;
+        public static final int textViewReturnedBookPublisher=0x7f0a005e;
+        public static final int textViewReturnedBookTitle=0x7f0a005c;
+        public static final int textViewSuccessBorrowBookAuthor=0x7f0a0058;
+        public static final int textViewSuccessBorrowBookPublicationDate=0x7f0a005a;
+        public static final int textViewSuccessBorrowBookPublisher=0x7f0a0059;
+        public static final int textViewSuccessBorrowBookShouldReturnedDate=0x7f0a005b;
+        public static final int textViewSuccessBorrowBookTitle=0x7f0a0057;
         public static final int textViewUnlockPassword=0x7f0a0043;
     }
     public static final class layout {
