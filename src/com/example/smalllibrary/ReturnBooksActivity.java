@@ -21,6 +21,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -186,6 +187,7 @@ public class ReturnBooksActivity extends Activity {
 	
 	private void CreateReturnBookListView(JSONObject jsonObj)
 	{
+		Log.d("ReturnBookListView", jsonObj.toString());
 		try {
 			JSONObject returnBooks = jsonObj.getJSONObject("ReturnBooks");
 			HashMap<String,Object> item = new HashMap<String,Object>();
@@ -217,6 +219,19 @@ public class ReturnBooksActivity extends Activity {
 			
 			//Set Out Date Count
 			textViewReturnBooksOutDate.setText(getResources().getString(R.string.OutDateBooks)  + outDateCount);
+			
+			if(returnBooks.getBoolean("isReserved") == true)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(ReturnBooksActivity.this);
+				builder.setTitle("This Book Has Reservation");
+				builder.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();	
+					}
+				});
+				builder.create().show();
+			}
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
